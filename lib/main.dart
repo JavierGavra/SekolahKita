@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sekolah_kita/features/splashscreen/splashscreen.dart';
+import 'package:sekolah_kita/core/theme/theme.dart';
+import 'package:sekolah_kita/features/splashscreen/views/pages/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,9 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(colorScheme: MaterialTheme.lightScheme()),
       home: const Splashscreen(),
     );
   }
