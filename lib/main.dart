@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sekolah_kita/features/kursus/views/course_page.dart';
+import 'package:sekolah_kita/core/theme/theme.dart';
+import 'package:sekolah_kita/features/splashscreen/views/pages/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,11 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Course',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const CoursePage(),
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(colorScheme: MaterialTheme.lightScheme()),
+      home: const Splashscreen(),
     );
   }
 }
