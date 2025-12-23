@@ -11,7 +11,7 @@ class Splashscreen extends StatelessWidget {
     await DatabaseHelper.instance.database;
 
     if (context.mounted) {
-      Navigate.push(context, IntroductionPage());
+      Navigate.pushReplacement(context, IntroductionPage());
     }
   }
 

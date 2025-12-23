@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sekolah_kita/core/constant/svg_assets.dart';
-import 'package:sekolah_kita/core/widgets/custom_snackbar.dart';
+import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
 import 'package:sekolah_kita/features/introduction/views/widgets/intro_slide_view.dart';
+import 'package:sekolah_kita/features/navigation/views/pages/bottom_navigation.dart';
 
 class IntroductionPage extends StatefulWidget {
   const IntroductionPage({super.key});
@@ -72,10 +73,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
         curve: Curves.easeInOut,
       );
     } else {
-      // Aksi ketika tombol "Mulai Sekarang" ditekan
-      // Navigasi ke halaman berikutnya
-      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomePage()));
-      showSnackBar(context, SnackBarType.commingSoon);
+      Navigate.pushReplacement(context, BottomNavigation());
     }
   }
 
