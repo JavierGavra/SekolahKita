@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../models/course_model.dart';
-import '../services/course_services.dart';
-import 'widgets/course_header.dart';
-import 'widgets/progress_card.dart';
-import 'widgets/module_card.dart';
-import 'widgets/info_card.dart';
+import '../../models/course_model.dart';
+import '../../services/course_services.dart';
+import '../widgets/course_detail_header.dart';
+import '../widgets/progress_card.dart';
+import '../widgets/module_card.dart';
+import '../widgets/info_card.dart';
 
-class CoursePage extends StatelessWidget {
-  const CoursePage({Key? key}) : super(key: key);
+class CourseDetailPage extends StatelessWidget {
+  const CourseDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class CoursePage extends StatelessWidget {
                 ],
               ),
             ),
-            CourseHeader(
+            CourseDetailHeader(
               title: course.title,
               completedModules: course.completedModules,
               totalModules: course.totalModules,
@@ -70,7 +70,9 @@ class CoursePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      ...course.modules.map((module) => ModuleCard(module: module)),
+                      ...course.modules.map(
+                        (module) => ModuleCard(module: module),
+                      ),
                       const SizedBox(height: 16),
                       const InfoCard(),
                       const SizedBox(height: 20),

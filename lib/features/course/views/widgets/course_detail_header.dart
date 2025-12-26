@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CourseHeader extends StatelessWidget {
+class CourseDetailHeader extends StatelessWidget {
   final String title;
   final int completedModules;
   final int totalModules;
 
-  const CourseHeader({
+  const CourseDetailHeader({
     Key? key,
     required this.title,
     required this.completedModules,
