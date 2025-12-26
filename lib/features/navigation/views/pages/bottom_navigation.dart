@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sekolah_kita/features/course/views/pages/course_page.dart';
 import 'package:sekolah_kita/features/home/views/pages/home_page.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -13,7 +14,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   List<Widget> get _pages => [
     HomePage(),
-    Center(child: Text('Search Page')),
+    CoursePage(),
     Center(child: Text('Profile Page')),
   ];
 
