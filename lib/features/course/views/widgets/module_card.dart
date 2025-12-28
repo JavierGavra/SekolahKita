@@ -1,124 +1,143 @@
 import 'package:flutter/material.dart';
+import 'package:sekolah_kita/core/theme/theme.dart';
+import 'package:sekolah_kita/features/course/models/course_types.dart';
 import '../../models/module_model.dart';
 
 class ModuleCard extends StatelessWidget {
   final ModuleModel module;
+  final CourseType type;
 
-  const ModuleCard({
-    Key? key,
-    required this.module,
-  }) : super(key: key);
+  const ModuleCard({super.key, required this.module, required this.type});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
+    final color = Theme.of(context).colorScheme;
+
+    final borderColor = switch (type) {
+      CourseType.reading => color.primaryContainer,
+      CourseType.writing => color.tertiaryContainer,
+      CourseType.numeration => color.secondaryContainer,
+    };
+
+    return Material(
+      color: color.surfaceContainerLowest,
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        onTap: (module.isLocked) ? null : () {},
+        splashColor: color.primaryContainer,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 50,
-            height: 50,
+        child: Opacity(
+          opacity: module.isLocked ? 0.6 : 1,
+          child: Ink(
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: module.isLocked 
-                  ? Colors.grey.shade200 
-                  : const Color(0xFFE3F2FD),
               borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: borderColor),
             ),
-            child: Icon(
-              module.isLocked ? Icons.lock : Icons.menu_book,
-              color: module.isLocked 
-                  ? Colors.grey.shade400 
-                  : const Color(0xFF1A6585),
-              size: 26,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
               children: [
-                Text(
-                  module.title,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: module.isLocked ? Colors.grey.shade500 : Colors.black87,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: module.type == 'Kuis'
-                            ? const Color(0xFFFFF3E0)
-                            : const Color(0xFFE3F2FD),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Text(
-                        module.type,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: module.type == 'Kuis'
-                              ? const Color(0xFFE65100)
-                              : const Color(0xFF1A6585),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    if (module.isCompleted) ...[
-                      const SizedBox(width: 8),
-                      const Icon(
-                        Icons.check_circle,
-                        color: Color(0xFF4CAF50),
-                        size: 16,
-                      ),
-                      const SizedBox(width: 4),
-                      const Text(
-                        'Selesai',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Color(0xFF4CAF50),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
+                _buildIcon(color),
+                const SizedBox(width: 16),
+                Expanded(child: _buildContent(color)),
+                if (module.isCompleted) _buildCompletedIndicator(color),
               ],
             ),
           ),
-          if (module.isCompleted)
-            Container(
-              width: 36,
-              height: 36,
-              decoration: const BoxDecoration(
-                color: Color(0xFF4CAF50),
-                shape: BoxShape.circle,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildIcon(ColorScheme color) {
+    final isMateri = module.type.toLowerCase() == "materi";
+    return Container(
+      width: 48,
+      height: 48,
+      decoration: BoxDecoration(
+        color: isMateri ? color.primaryContainer : color.tertiaryContainer,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Icon(
+        (module.isLocked)
+            ? Icons.lock_outline_rounded
+            : (isMateri)
+            ? Icons.menu_book_rounded
+            : Icons.assignment_outlined,
+        color: isMateri ? color.onPrimaryContainer : color.onTertiaryContainer,
+        size: 20,
+      ),
+    );
+  }
+
+  Widget _buildTypeChip(ColorScheme color) {
+    final isMateri = module.type.toLowerCase() == 'materi';
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: color.surfaceContainer,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        module.type,
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          height: 1.333,
+          fontSize: 12,
+          color: isMateri ? color.primary : color.tertiary,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContent(ColorScheme color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 4,
+      children: [
+        Text(
+          module.title,
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+            height: 1.5,
+          ),
+        ),
+        Row(
+          children: [
+            _buildTypeChip(color),
+            if (module.isCompleted) ...[
+              const SizedBox(width: 8),
+              Icon(
+                Icons.check_circle_outline_rounded,
+                color: color.success,
+                size: 14,
               ),
-              child: const Icon(
-                Icons.check,
-                color: Colors.white,
-                size: 20,
+              const SizedBox(width: 4),
+              Text(
+                'Selesai',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  height: 1.333,
+                  fontSize: 12,
+                  color: color.success,
+                ),
               ),
-            ),
-        ],
+            ],
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCompletedIndicator(ColorScheme color) {
+    return Container(
+      width: 28,
+      height: 28,
+      decoration: BoxDecoration(color: color.success, shape: BoxShape.circle),
+      child: Icon(
+        Icons.check_circle_outline_rounded,
+        color: color.onSuccess,
+        size: 16,
       ),
     );
   }

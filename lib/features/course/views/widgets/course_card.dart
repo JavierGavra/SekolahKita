@@ -1,55 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sekolah_kita/core/constant/svg_assets.dart';
+import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
+import 'package:sekolah_kita/features/course/models/course_types.dart';
+import 'package:sekolah_kita/features/course/views/pages/course_detail_page.dart';
 
 class CourseCard extends StatelessWidget {
+  final CourseType type;
+  final double progress;
+  final int myStars;
+
   const CourseCard({
     super.key,
-    required this.title,
-    required this.iconPath,
-    required this.accentColor,
+    required this.type,
     required this.progress,
     required this.myStars,
   });
 
-  final String title, iconPath;
-  final Color accentColor;
-  final double progress;
-  final int myStars;
+  void _onTap(BuildContext context) =>
+      Navigate.push(context, CourseDetailPage(type: type));
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+    Color accentColor = switch (type) {
+      CourseType.reading => color.primary,
+      CourseType.writing => color.tertiary,
+      CourseType.numeration => color.secondary,
+    };
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 16, 20, 16),
-      decoration: BoxDecoration(
-        color: color.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.secondaryContainer),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 22,
-        children: [
-          _buildIcon(color),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildTitle(),
-                SizedBox(height: 12),
-                ..._buildProgress(color),
-                SizedBox(height: 8),
-                _buildStars(color),
-              ],
+    return InkWell(
+      onTap: () => _onTap(context),
+      splashColor: color.primaryContainer,
+      borderRadius: BorderRadius.circular(16),
+      child: Ink(
+        padding: const EdgeInsets.fromLTRB(16, 16, 20, 16),
+        decoration: BoxDecoration(
+          color: color.surfaceContainerLowest,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: color.secondaryContainer),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 22,
+          children: [
+            _buildIcon(accentColor),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildTitle(),
+                  SizedBox(height: 12),
+                  ..._buildProgress(color, accentColor),
+                  SizedBox(height: 8),
+                  _buildStars(color),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildIcon(ColorScheme color) {
+  Widget _buildIcon(Color accentColor) {
+    String iconPath = switch (type) {
+      CourseType.reading => SvgAssets.introReadingIcon,
+      CourseType.writing => SvgAssets.introWritingIcon,
+      CourseType.numeration => SvgAssets.introNumerationIcon,
+    };
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -72,12 +92,16 @@ class CourseCard extends StatelessWidget {
 
   Widget _buildTitle() {
     return Text(
-      title,
+      switch (type) {
+        CourseType.reading => "Literasi Membaca",
+        CourseType.writing => "Literasi Menulis",
+        CourseType.numeration => "Numerasi Dasar",
+      },
       style: TextStyle(fontSize: 16, height: 1.5, fontWeight: FontWeight.w600),
     );
   }
 
-  List<Widget> _buildProgress(ColorScheme color) {
+  List<Widget> _buildProgress(ColorScheme color, Color accentColor) {
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
