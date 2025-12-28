@@ -17,7 +17,7 @@ class CourseHeader extends StatelessWidget {
           children: [
             _buildGreeting(color),
             SizedBox(height: 24),
-            _buildProgress(color),
+            _buildProgressCard(color),
           ],
         ),
       ),
@@ -54,7 +54,7 @@ class CourseHeader extends StatelessWidget {
     );
   }
 
-  Widget _buildProgress(ColorScheme color) {
+  Widget _buildProgressCard(ColorScheme color) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(

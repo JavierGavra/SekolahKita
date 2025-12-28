@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:sekolah_kita/core/constant/svg_assets.dart';
+import 'package:sekolah_kita/features/course/models/course_types.dart';
 import 'package:sekolah_kita/features/course/views/widgets/course_card.dart';
 import 'package:sekolah_kita/features/course/views/widgets/course_header.dart';
 
@@ -9,7 +8,6 @@ class CoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme;
     return Scaffold(
       body: Column(
         children: [
@@ -17,7 +15,7 @@ class CoursePage extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -30,25 +28,19 @@ class CoursePage extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 CourseCard(
-                  title: 'Literasi Membaca',
-                  iconPath: SvgAssets.introReadingIcon,
-                  accentColor: color.primary,
+                  type: CourseType.reading,
                   progress: 0.65,
                   myStars: 3,
                 ),
                 SizedBox(height: 16),
                 CourseCard(
-                  title: 'Literasi Menulis',
-                  iconPath: SvgAssets.introWritingIcon,
-                  accentColor: color.tertiary,
+                  type: CourseType.writing,
                   progress: 0.42,
                   myStars: 2,
                 ),
                 SizedBox(height: 16),
                 CourseCard(
-                  title: 'Numerasi Dasar',
-                  iconPath: SvgAssets.introNumerationIcon,
-                  accentColor: color.secondary,
+                  type: CourseType.numeration,
                   progress: 0.78,
                   myStars: 4,
                 ),
