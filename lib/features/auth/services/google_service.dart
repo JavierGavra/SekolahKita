@@ -5,13 +5,13 @@ import 'package:sekolah_kita/core/constant/constant.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class GoogleService {
-  Future<AuthResponse> googleSignIn() async {
+  Future<AuthResponse> googleAuth() async {
     try {
       final GoogleSignIn signIn = GoogleSignIn.instance;
 
       // 1️⃣ WAJIB await initialize
       await signIn.initialize(
-        clientId: iosClientId,
+        clientId: androidClientId,
         serverClientId: webClientId, // web client ID dari Google Console
       );
 
