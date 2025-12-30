@@ -13,7 +13,11 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
 
-  List<Widget> get _pages => [HomePage(), CoursePage(), ProfileScreen()];
+  List<Widget> get _pages => [
+    const HomePage(),
+    const CoursePage(),
+    const ProfileScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {

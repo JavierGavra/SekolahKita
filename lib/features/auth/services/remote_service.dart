@@ -55,9 +55,9 @@ class RemoteService {
     try {
       await _supabase.auth.signOut();
     } on AuthException catch (e) {
-      throw Exception(_handleAuthError(e));
+      throw _handleAuthError(e);
     } catch (e) {
-      throw Exception('Gagal logout: $e');
+      throw 'Gagal logout: $e';
     }
   }
 
@@ -185,17 +185,12 @@ class RemoteService {
   /// Create user profile in database after registration
   Future<void> createUserProfile({
     required String userId,
-    required String name,
-    required String email,
-    String? photoUrl,
+    required String namaLengkap,
   }) async {
     try {
-      await _supabase.from('profiles').insert({
+      await _supabase.from('profil').insert({
         'id': userId,
-        'name': name,
-        'email': email,
-        'photo_url': photoUrl,
-        'created_at': DateTime.now().toIso8601String(),
+        'nama_lengkap': namaLengkap,
       });
     } catch (e) {
       throw Exception('Gagal membuat profil: $e');

@@ -17,6 +17,8 @@ class LocalDataPersisance {
 
   bool? get getIsFirstOpen => _prefs?.getBool("is_first_open");
 
+  String? get getUserId => _prefs?.getString("user_id");
+
   String? get getUsername => _prefs?.getString("username");
 
   String? get getEmail => _prefs?.getString("email");
@@ -25,6 +27,10 @@ class LocalDataPersisance {
 
   Future<void> setIsFirstOpen(bool value) async {
     await _prefs?.setBool('is_first_open', value);
+  }
+
+  Future<void> setUserId(String value) async {
+    await _prefs?.setString('user_id', value);
   }
 
   Future<void> setUsername(String value) async {
@@ -37,5 +43,21 @@ class LocalDataPersisance {
 
   Future<void> setLastCourse(String value) async {
     await _prefs?.setString('last_course', value);
+  }
+
+  Future<void> removeUserId() async {
+    await _prefs?.remove('user_id');
+  }
+
+  Future<void> removeUsername() async {
+    await _prefs?.remove('username');
+  }
+
+  Future<void> removeEmail() async {
+    await _prefs?.remove('email');
+  }
+
+  Future<void> removeLastCourse() async {
+    await _prefs?.remove('last_course');
   }
 }

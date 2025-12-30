@@ -34,7 +34,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       LocalDataPersisance()
         ..setEmail(response.user!.email!)
-        ..setUsername(response.user!.userMetadata!['name']);
+        ..setUsername(response.user!.userMetadata!['name'])
+        ..setUserId(response.user!.id);
 
       emit(AuthState(status: AuthStateStatus.authenticated));
     } catch (e) {
@@ -50,7 +51,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthState(status: AuthStateStatus.loading));
 
     try {
-      final response = await GoogleService().googleSignIn();
+      final response = await GoogleService().googleAuth();
 
       LocalDataPersisance()
         ..setEmail(response.user!.email!)
@@ -75,7 +76,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthState(status: AuthStateStatus.loading));
 
     try {
-      final response = await _remote.register(
+      await _remote.register(
         email: event.email,
         password: event.password,
         name: event.name,
@@ -106,8 +107,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthState(status: AuthStateStatus.loading));
 
     try {
-      // TODO: Clear token/session
-      // await _authRepository.logout();
+      await _remote.logout();
+
+      LocalDataPersisance()
+        ..removeEmail()
+        ..removeUsername()
+        ..removeLastCourse()
+        ..removeUserId();
 
       await Future.delayed(const Duration(milliseconds: 500));
 
