@@ -30,6 +30,9 @@ class MaterialTheme {
       surfaceContainerHighest: Color(0xFFDFE3E7),
       outline: Color(0xFF71787D),
       outlineVariant: Color(0xFFC0C7CD),
+      inverseSurface: Color(0xFF2C3134),
+      onInverseSurface: Color(0xFFEDF1F5),
+      inversePrimary: Color(0xFF8ECFF2),
     );
   }
 }

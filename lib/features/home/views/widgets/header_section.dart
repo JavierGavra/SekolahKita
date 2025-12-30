@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/widgets/online_chip.dart';
 
 class HeaderSection extends StatelessWidget {
@@ -38,7 +39,7 @@ class HeaderSection extends StatelessWidget {
               ),
             ),
             Text(
-              'Ahmad Rusdi',
+              LocalDataPersisance().getUsername ?? '----',
               style: TextStyle(
                 color: color.onPrimary,
                 fontSize: 24,
