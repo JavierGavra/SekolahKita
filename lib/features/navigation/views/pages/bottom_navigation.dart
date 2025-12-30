@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sekolah_kita/features/course/views/pages/course_page.dart';
 import 'package:sekolah_kita/features/home/views/pages/home_page.dart';
+import 'package:sekolah_kita/features/profiles/screens/profile_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -12,11 +13,7 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
 
-  List<Widget> get _pages => [
-    HomePage(),
-    CoursePage(),
-    Center(child: Text('Profile Page')),
-  ];
+  List<Widget> get _pages => [HomePage(), CoursePage(), ProfileScreen()];
 
   @override
   Widget build(BuildContext context) {
