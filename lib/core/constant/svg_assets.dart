@@ -4,4 +4,5 @@ abstract class SvgAssets {
   static const String introNumerationIcon =
       'assets/icons/intro_numeration_icon.svg';
   static const String introEndIcon = 'assets/icons/intro_end_icon.svg';
+  static const String googleIcon = 'assets/icons/google_icon.svg';
 }
