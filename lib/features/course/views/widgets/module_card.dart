@@ -1,13 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:sekolah_kita/core/theme/theme.dart';
+import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
 import 'package:sekolah_kita/features/course/models/course_types.dart';
 import '../../models/module_model.dart';
+import '../pages/material_content_page.dart';
 
 class ModuleCard extends StatelessWidget {
   final ModuleModel module;
   final CourseType type;
 
   const ModuleCard({super.key, required this.module, required this.type});
+
+  void _onTap(BuildContext context) {
+    // Jika modul locked, tampilkan snackbar
+    if (module.isLocked) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Selesaikan modul sebelumnya terlebih dahulu'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    // Jika tipe Materi, buka MaterialContentPage
+    if (module.type == 'Materi') {
+      Navigate.push(context, MaterialContentPage(module: module));
+    }
+    // Jika tipe Kuis, tampilkan coming soon
+    else if (module.type == 'Kuis') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Halaman kuis akan segera hadir'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +52,7 @@ class ModuleCard extends StatelessWidget {
       color: color.surfaceContainerLowest,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
-        onTap: (module.isLocked) ? null : () {},
+        onTap: () => _onTap(context),
         splashColor: color.primaryContainer,
         borderRadius: BorderRadius.circular(16),
         child: Opacity(

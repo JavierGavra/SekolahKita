@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sekolah_kita/core/theme/theme.dart';
 import 'package:sekolah_kita/features/splashscreen/views/pages/splashscreen.dart';
+import 'package:sekolah_kita/features/course/views/pages/course_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: MaterialTheme.lightScheme(),
       ),
-      home: const Splashscreen(),
+      home: const CoursePage(),
     );
   }
 }
