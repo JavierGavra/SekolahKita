@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sekolah_kita/core/constant/svg_assets.dart';
+import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
+import 'package:sekolah_kita/features/auth/views/pages/login_page.dart';
 import 'package:sekolah_kita/features/introduction/views/widgets/intro_slide_view.dart';
-import 'package:sekolah_kita/features/navigation/views/pages/bottom_navigation.dart';
 
 class IntroductionPage extends StatefulWidget {
   const IntroductionPage({super.key});
@@ -73,7 +74,8 @@ class _IntroductionPageState extends State<IntroductionPage> {
         curve: Curves.easeInOut,
       );
     } else {
-      Navigate.pushReplacement(context, BottomNavigation());
+      LocalDataPersisance().setIsFirstOpen(false);
+      Navigate.pushReplacement(context, LoginPage());
     }
   }
 

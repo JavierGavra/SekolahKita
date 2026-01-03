@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-SnackBar _createSnackBar(BuildContext context, SnackBarType type) {
+SnackBar _createSnackBar(
+  BuildContext context,
+  SnackBarType type,
+  String? message,
+) {
   final color = Theme.of(context).colorScheme;
   Widget content = SizedBox();
 
@@ -12,17 +16,35 @@ SnackBar _createSnackBar(BuildContext context, SnackBarType type) {
         Text("Comming Soon!", style: TextStyle(color: color.onInverseSurface)),
       ],
     );
+  } else if (type == SnackBarType.failed) {
+    content = Row(
+      children: [
+        Icon(Icons.warning, size: 18, color: color.error),
+        SizedBox(width: 15),
+        Expanded(
+          child: Text(
+            message ?? "Ada masalah",
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: color.onError),
+          ),
+        ),
+      ],
+    );
   }
 
   return SnackBar(
-    duration: const Duration(seconds: 1),
+    duration: (type == SnackBarType.failed)
+        ? const Duration(seconds: 2)
+        : const Duration(seconds: 1),
     content: content,
     showCloseIcon: true,
   );
 }
 
-enum SnackBarType { commingSoon }
+enum SnackBarType { commingSoon, failed }
 
-void showSnackBar(BuildContext context, SnackBarType type) {
-  ScaffoldMessenger.of(context).showSnackBar(_createSnackBar(context, type));
+void showSnackBar(BuildContext context, SnackBarType type, {String? message}) {
+  ScaffoldMessenger.of(
+    context,
+  ).showSnackBar(_createSnackBar(context, type, message));
 }
