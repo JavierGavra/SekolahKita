@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
 import 'package:sekolah_kita/core/widgets/custom_snackbar.dart';
-import 'package:sekolah_kita/features/auth/views/pages/login_page.dart';
 import 'package:sekolah_kita/features/introduction/views/pages/introduction_page.dart';
 import 'package:sekolah_kita/features/navigation/views/pages/bottom_navigation.dart';
+import 'package:sekolah_kita/features/profile/views/pages/create_profile_page.dart';
 import 'package:sekolah_kita/features/splashscreen/cubit/splashscreen_cubit.dart';
 
 class Splashscreen extends StatelessWidget {
@@ -18,14 +18,14 @@ class Splashscreen extends StatelessWidget {
     }
 
     final isFirstOpen = LocalDataPersisance().getIsFirstOpen ?? true;
-    final isLogin = LocalDataPersisance().getEmail != null;
+    final isLogin = LocalDataPersisance().getUsername != null;
     Navigate.pushReplacement(
       context,
       isFirstOpen
           ? const IntroductionPage()
           : isLogin
           ? const BottomNavigation()
-          : const LoginPage(),
+          : const CreateProfilePage(),
     );
   }
 

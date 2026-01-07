@@ -188,9 +188,9 @@ class RemoteService {
     required String namaLengkap,
   }) async {
     try {
-      await _supabase.from('profil').insert({
+      await _supabase.from('profiles').insert({
         'id': userId,
-        'nama_lengkap': namaLengkap,
+        'name': namaLengkap,
       });
     } catch (e) {
       throw Exception('Gagal membuat profil: $e');

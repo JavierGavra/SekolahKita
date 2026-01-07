@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sekolah_kita/core/constant/constant.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sekolah_kita/core/database/database_helper.dart';
@@ -27,6 +28,7 @@ class SplashscreenCubit extends Cubit<SplashscreenState> {
 
       emit(SplashscreenState(status: SplashscreenStatus.success));
     } catch (e) {
+      if (kDebugMode) print(e);
       emit(
         SplashscreenState(
           status: SplashscreenStatus.failure,
