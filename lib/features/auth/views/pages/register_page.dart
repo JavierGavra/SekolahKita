@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sekolah_kita/core/utils/valdator/input_validator.dart';
 import 'package:sekolah_kita/core/widgets/custom_snackbar.dart';
+import 'package:sekolah_kita/core/widgets/loading_widget.dart';
 import 'package:sekolah_kita/features/auth/bloc/auth_bloc.dart';
-import 'package:sekolah_kita/features/auth/views/pages/login_page.dart';
+import 'package:sekolah_kita/features/auth/views/pages/email_verification_page.dart';
 import 'package:sekolah_kita/features/auth/views/widgets/auth_switch_button.dart';
 import 'package:sekolah_kita/features/auth/views/widgets/auth_text_field.dart';
 import 'package:sekolah_kita/features/auth/views/widgets/google_auth_button.dart';
@@ -25,6 +26,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _performRegister() {
     if (_formKey.currentState!.validate()) {
+      context.pushTransition(
+        type: PageTransitionType.fade,
+        child: LoadingWidget.dialogFullscreen(canPop: false),
+      );
       context.read<AuthBloc>().add(
         RegisterRequested(
           name: _usernameController.text,
@@ -35,10 +40,17 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  void _listerner(BuildContext context, AuthState state) {
+  void _listerner(BuildContext context, AuthState state) async {
     if (state.status == AuthStateStatus.authenticated) {
-      Navigate.pushReplacement(context, const LoginPage());
+      Navigator.maybePop(context);
+      context.pushTransition(
+        curve: Curves.easeOut,
+        type: PageTransitionType.bottomToTop,
+        duration: const Duration(milliseconds: 300),
+        childBuilder: (context) => EmailVerificationPage(),
+      );
     } else if (state.status == AuthStateStatus.failure) {
+      if (Navigator.canPop(context)) Navigator.pop(context);
       showSnackBar(context, SnackBarType.failed, message: state.errorMessage);
     }
   }
@@ -90,6 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       label: "Email",
                       controller: _emailController,
                       prefixIcon: Icons.mail_outline_rounded,
+                      keyboardType: TextInputType.emailAddress,
                       validator: (value) =>
                           InputValidator().emailValidator(value),
                     ),
@@ -166,15 +179,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 borderRadius: BorderRadius.circular(14),
               ),
             ),
-            child: (state.status == AuthStateStatus.loading)
-                ? SizedBox.square(
-                    dimension: 24,
-                    child: CircularProgressIndicator(color: color.onPrimary),
-                  )
-                : const Text(
-                    "Daftar",
-                    style: TextStyle(fontSize: 16, height: 1.5),
-                  ),
+            child: const Text(
+              "Daftar",
+              style: TextStyle(fontSize: 16, height: 1.5),
+            ),
           ),
         );
       },

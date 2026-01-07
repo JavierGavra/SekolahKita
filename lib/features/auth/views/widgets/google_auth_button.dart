@@ -15,7 +15,9 @@ class GoogleAuthButton extends StatelessWidget {
     context.read<AuthBloc>().add(const GoogleLoginRequested());
   }
 
-  void _onRegister(BuildContext context) {}
+  void _onRegister(BuildContext context) {
+    context.read<AuthBloc>().add(const GoogleLoginRequested());
+  }
 
   @override
   Widget build(BuildContext context) {

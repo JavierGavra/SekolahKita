@@ -14,7 +14,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<GoogleLoginRequested>(_onGoogleLoginRequested);
     on<RegisterRequested>(_onRegisterRequested);
     on<LogoutRequested>(_onLogoutRequested);
-    on<AuthStatusChecked>(_onAuthStatusChecked);
+    // on<AuthStatusChecked>(_onAuthStatusChecked);
   }
 
   final RemoteService _remote = RemoteService();
@@ -26,16 +26,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthState(status: AuthStateStatus.loading));
 
     try {
-      print(event.email);
       final response = await _remote.login(
         email: event.email,
         password: event.password,
       );
 
-      LocalDataPersisance()
-        ..setEmail(response.user!.email!)
-        ..setUsername(response.user!.userMetadata!['name'])
-        ..setUserId(response.user!.id);
+      LocalDataPersisance().setUsername(response.user!.userMetadata!['name']);
 
       emit(AuthState(status: AuthStateStatus.authenticated));
     } catch (e) {
@@ -53,9 +49,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final response = await GoogleService().googleAuth();
 
-      LocalDataPersisance()
-        ..setEmail(response.user!.email!)
-        ..setUsername(response.user!.userMetadata!['name']);
+      LocalDataPersisance().setUsername(response.user!.userMetadata!['name']);
 
       emit(AuthState(status: AuthStateStatus.authenticated));
     } catch (e) {
@@ -83,12 +77,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       emit(AuthState(status: AuthStateStatus.authenticated));
-
-      // Jika gagal:
-      // emit(AuthState(
-      //   status: AuthStateStatus.failure,
-      //   errorMessage: 'Email sudah terdaftar',
-      // ));
     } catch (e) {
       if (kDebugMode) print(e.toString());
       emit(
@@ -110,10 +98,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await _remote.logout();
 
       LocalDataPersisance()
-        ..removeEmail()
         ..removeUsername()
-        ..removeLastCourse()
-        ..removeUserId();
+        ..removeLastCourse();
 
       await Future.delayed(const Duration(milliseconds: 500));
 
@@ -128,35 +114,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _onAuthStatusChecked(
-    AuthStatusChecked event,
-    Emitter<AuthState> emit,
-  ) async {
-    emit(AuthState(status: AuthStateStatus.loading));
+  // Future<void> _onAuthStatusChecked(
+  //   AuthStatusChecked event,
+  //   Emitter<AuthState> emit,
+  // ) async {
+  //   emit(AuthState(status: AuthStateStatus.loading));
 
-    try {
-      // TODO: Check if user is already logged in
-      // Check token from local storage
-      // final isLoggedIn = await _authRepository.isLoggedIn();
+  //   try {
+  //     // TODO: Check if user is already logged in
+  //     // Check token from local storage
+  //     // final isLoggedIn = await _authRepository.isLoggedIn();
 
-      await Future.delayed(const Duration(milliseconds: 500));
+  //     await Future.delayed(const Duration(milliseconds: 500));
 
-      // Simulasi cek token
-      final bool isLoggedIn = false; // Replace dengan actual check
+  //     // Simulasi cek token
+  //     final bool isLoggedIn = false; // Replace dengan actual check
 
-      if (isLoggedIn) {
-        // TODO: Get user data from storage/API
-        emit(AuthState(status: AuthStateStatus.authenticated));
-      } else {
-        emit(AuthState(status: AuthStateStatus.unauthenticated));
-      }
-    } catch (e) {
-      emit(
-        AuthState(
-          status: AuthStateStatus.unauthenticated,
-          errorMessage: 'Gagal memeriksa status: ${e.toString()}',
-        ),
-      );
-    }
-  }
+  //     if (isLoggedIn) {
+  //       // TODO: Get user data from storage/API
+  //       emit(AuthState(status: AuthStateStatus.authenticated));
+  //     } else {
+  //       emit(AuthState(status: AuthStateStatus.unauthenticated));
+  //     }
+  //   } catch (e) {
+  //     emit(
+  //       AuthState(
+  //         status: AuthStateStatus.unauthenticated,
+  //         errorMessage: 'Gagal memeriksa status: ${e.toString()}',
+  //       ),
+  //     );
+  //   }
+  // }
 }

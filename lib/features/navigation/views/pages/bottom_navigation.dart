@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sekolah_kita/features/course/views/pages/course_page.dart';
 import 'package:sekolah_kita/features/home/views/pages/home_page.dart';
-import 'package:sekolah_kita/features/profiles/screens/profile_screen.dart';
+import 'package:sekolah_kita/features/profile/views/pages/profile_page.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -16,7 +16,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   List<Widget> get _pages => [
     const HomePage(),
     const CoursePage(),
-    const ProfileScreen(),
+    const ProfilePage(),
   ];
 
   @override

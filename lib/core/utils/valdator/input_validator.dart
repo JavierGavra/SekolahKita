@@ -1,6 +1,6 @@
 class InputValidator {
   String? emptyValidator(value) {
-    return value.toString().trim().isEmpty ? 'Bidang tidak boleh kosong' : null;
+    return value.toString().isEmpty ? 'Bidang tidak boleh kosong' : null;
   }
 
   String? emailValidator(value) {

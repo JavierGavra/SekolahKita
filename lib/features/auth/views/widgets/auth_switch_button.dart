@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sekolah_kita/features/auth/views/pages/login_page.dart';
 import 'package:sekolah_kita/features/auth/views/pages/register_page.dart';
 
@@ -15,9 +15,12 @@ class AuthSwitchButton extends StatelessWidget {
     final color = Theme.of(context).colorScheme;
     return Center(
       child: TextButton(
-        onPressed: () => Navigate.pushReplacement(
-          context,
-          isToRegister ? const RegisterPage() : const LoginPage(),
+        onPressed: () => context.pushReplacementTransition(
+          type: PageTransitionType.fade,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+          childBuilder: (context) =>
+              isToRegister ? RegisterPage() : LoginPage(),
         ),
         child: Text.rich(
           TextSpan(

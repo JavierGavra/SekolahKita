@@ -17,11 +17,9 @@ class LocalDataPersisance {
 
   bool? get getIsFirstOpen => _prefs?.getBool("is_first_open");
 
-  String? get getUserId => _prefs?.getString("user_id");
-
   String? get getUsername => _prefs?.getString("username");
 
-  String? get getEmail => _prefs?.getString("email");
+  String? get getAvatar => _prefs?.getString("avatar");
 
   String? get getLastCourse => _prefs?.getString("last_course");
 
@@ -29,32 +27,24 @@ class LocalDataPersisance {
     await _prefs?.setBool('is_first_open', value);
   }
 
-  Future<void> setUserId(String value) async {
-    await _prefs?.setString('user_id', value);
-  }
-
   Future<void> setUsername(String value) async {
     await _prefs?.setString('username', value);
   }
 
-  Future<void> setEmail(String value) async {
-    await _prefs?.setString('email', value);
+  Future<void> setAvatar(String value) async {
+    await _prefs?.setString('avatar', value);
   }
 
   Future<void> setLastCourse(String value) async {
     await _prefs?.setString('last_course', value);
   }
 
-  Future<void> removeUserId() async {
-    await _prefs?.remove('user_id');
-  }
-
   Future<void> removeUsername() async {
     await _prefs?.remove('username');
   }
 
-  Future<void> removeEmail() async {
-    await _prefs?.remove('email');
+  Future<void> removeAvatar() async {
+    await _prefs?.remove('avatar');
   }
 
   Future<void> removeLastCourse() async {

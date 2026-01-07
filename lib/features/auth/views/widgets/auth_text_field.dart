@@ -5,6 +5,7 @@ class AuthTextField extends StatefulWidget {
   final bool isPassword;
   final String label;
   final IconData prefixIcon;
+  final TextInputType keyboardType;
   final TextEditingController controller;
   final String? Function(String?)? validator;
 
@@ -13,6 +14,7 @@ class AuthTextField extends StatefulWidget {
     required this.label,
     required this.prefixIcon,
     required this.controller,
+    this.keyboardType = TextInputType.text,
     this.validator,
   }) : isPassword = false;
 
@@ -22,7 +24,8 @@ class AuthTextField extends StatefulWidget {
     required this.controller,
     this.validator,
   }) : prefixIcon = Icons.lock_outline_rounded,
-       isPassword = true;
+       isPassword = true,
+       keyboardType = TextInputType.visiblePassword;
 
   @override
   State<AuthTextField> createState() => _AuthTextFieldState();
@@ -44,9 +47,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
       textInputAction: TextInputAction.next,
       obscureText: widget.isPassword && !_isVisible,
       enableSuggestions: !widget.isPassword,
-      keyboardType: widget.isPassword
-          ? TextInputType.visiblePassword
-          : TextInputType.emailAddress,
+      keyboardType: widget.keyboardType,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator:
           widget.validator ?? (value) => InputValidator().emptyValidator(value),
