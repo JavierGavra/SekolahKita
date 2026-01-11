@@ -23,6 +23,7 @@ dependencies:
   google_sign_in: ^7.2.0
   page_transition: ^2.2.1
   lottie: ^3.3.2
+  speech_to_text: ^7.3.0
 
 dev_dependencies:
   flutter_test:
