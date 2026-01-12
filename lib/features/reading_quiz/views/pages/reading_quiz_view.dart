@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sekolah_kita/core/widgets/quiz_snackbar.dart';
 import 'package:sekolah_kita/features/reading_quiz/bloc/reading_quiz_bloc.dart';
+import 'package:sekolah_kita/features/reading_quiz/views/pages/reading_quiz_result_page.dart';
+import 'package:sekolah_kita/features/reading_quiz/views/widgets/exit_dialog.dart';
 import 'package:sekolah_kita/features/reading_quiz/views/widgets/microphone_button.dart';
 
 class ReadingQuizView extends StatefulWidget {
@@ -37,6 +40,11 @@ class _ReadingQuizViewState extends State<ReadingQuizView>
     });
   }
 
+  void _performPop() async {
+    final isExit = await showExitQuizDialog(context);
+    if (isExit && mounted) Navigator.of(context).pop();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -69,7 +77,18 @@ class _ReadingQuizViewState extends State<ReadingQuizView>
           correctAnswer: state.currentQuestion.text,
         );
 
-        if (state.status == ReadingQuizStatus.ready) {
+        if (state.status == ReadingQuizStatus.completed) {
+          context.pushReplacementTransition(
+            curve: Curves.easeInOut,
+            type: PageTransitionType.sharedAxisVertical,
+            duration: const Duration(milliseconds: 700),
+            child: ReadingQuizResultPage(
+              correctAnswers: state.correctAnswers,
+              totalQuestions: state.totalQuestions,
+              percentage: state.percentage,
+            ),
+          );
+        } else if (state.status == ReadingQuizStatus.ready) {
           setState(() => _updateProgressAnimation(state));
         } else if (state.status == ReadingQuizStatus.answered) {
           snackBar.show(context, type: QuizSnackBarType.correct);
@@ -103,71 +122,79 @@ class _ReadingQuizViewState extends State<ReadingQuizView>
               }
 
               final currentQuestion = state.currentQuestion;
-              return Column(
-                children: [
-                  _buildHeader(
-                    color,
-                    state.totalQuestions,
-                    state.currentQuestionIndex,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Baca kata atau kalimat\ndi bawah ini!",
-                          style: TextStyle(
-                            fontSize: 20,
-                            height: 1.4,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(3),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: color.surfaceContainerHighest,
-                            border: Border.all(
-                              width: 3,
-                              color: currentQuestion.difficultyColor,
-                            ),
-                          ),
-                          child: Text(
-                            currentQuestion.difficultyEmoji,
+              return PopScope(
+                canPop: (state.currentQuestionIndex == 0),
+                onPopInvokedWithResult: (didPop, result) {
+                  if (state.currentQuestionIndex == 0) return;
+                  if (didPop) return;
+                  _performPop();
+                },
+                child: Column(
+                  children: [
+                    _buildHeader(
+                      color,
+                      state.totalQuestions,
+                      state.currentQuestionIndex,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Baca kata atau kalimat\ndi bawah ini!",
                             style: TextStyle(
-                              color: color.onPrimary,
                               fontSize: 20,
+                              height: 1.4,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(32),
-                    margin: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: color.primaryContainer,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: Text(
-                      currentQuestion.text,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: color.onPrimaryContainer,
-                        fontWeight: FontWeight.bold,
-                        height: 1.333,
-                        fontSize: 24,
+                          Container(
+                            padding: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: color.surfaceContainerHighest,
+                              border: Border.all(
+                                width: 3,
+                                color: currentQuestion.difficultyColor,
+                              ),
+                            ),
+                            child: Text(
+                              currentQuestion.difficultyEmoji,
+                              style: TextStyle(
+                                color: color.onPrimary,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 60),
-                  MicrophoneButton(),
-                  const SizedBox(height: 66),
-                ],
+                    const SizedBox(height: 16),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(32),
+                      margin: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: color.primaryContainer,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Text(
+                        currentQuestion.text,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: color.onPrimaryContainer,
+                          fontWeight: FontWeight.bold,
+                          height: 1.333,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 60),
+                    MicrophoneButton(),
+                    const SizedBox(height: 66),
+                  ],
+                ),
               );
             },
           ),
@@ -182,7 +209,13 @@ class _ReadingQuizViewState extends State<ReadingQuizView>
       child: Row(
         children: [
           IconButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              if (index == 0) {
+                Navigator.pop(context);
+                return;
+              }
+              _performPop();
+            },
             icon: const Icon(Icons.close),
             color: color.onSurfaceVariant,
           ),

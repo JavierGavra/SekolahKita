@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sekolah_kita/features/course/models/course_types.dart';
+import '../../services/local_service.dart';
 import '../../models/course_model.dart';
-import '../../services/course_services.dart';
 import '../widgets/course_detail_header.dart';
 import '../widgets/module_card.dart';
 import '../widgets/info_card.dart';
@@ -14,7 +14,11 @@ class CourseDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
-    final CourseModel course = CourseService.getCourseData();
+    final CourseModel course = switch (type) {
+      CourseType.reading => LocalService().getReadingCourse(),
+      CourseType.writing => LocalService().getWrittingCourse(),
+      CourseType.numeration => LocalService().getWrittingCourse(),
+    };
 
     return Scaffold(
       backgroundColor: color.primary,

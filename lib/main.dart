@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sekolah_kita/core/bloc/provider.dart';
 import 'package:sekolah_kita/core/theme/theme.dart';
 import 'package:sekolah_kita/features/reading_quiz/views/pages/reading_quiz_page.dart';
+import 'package:sekolah_kita/features/reading_quiz/views/pages/reading_quiz_result_page.dart';
 import 'package:sekolah_kita/features/splashscreen/views/pages/splashscreen.dart';
 
 void main() {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: MaterialTheme.lightScheme(),
         ),
-        home: const ReadingQuizPage(),
+        home: const Splashscreen(),
       ),
     );
   }
