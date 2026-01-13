@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sekolah_kita/features/numeration_quiz/bloc/quiz_bloc.dart';
 import 'package:sekolah_kita/features/numeration_quiz/cubit/multiple_choice_cubit.dart';
 import 'package:sekolah_kita/features/numeration_quiz/models/multiple_choice_model.dart';
 import 'package:sekolah_kita/features/numeration_quiz/models/quiz_question_model.dart';
 import 'package:sekolah_kita/features/numeration_quiz/views/pages/numeration_quiz_view.dart';
+import 'package:sekolah_kita/features/numeration_quiz/views/pages/quiz_result_page.dart';
 import 'package:sekolah_kita/features/reading_quiz/views/widgets/exit_dialog.dart';
 
 class NumerationQuizPage extends StatefulWidget {
@@ -68,7 +70,18 @@ class _NumerationQuizPageState extends State<NumerationQuizPage>
               _updateProgressAnimation(state);
 
               if (state.isLastQuestion &&
-                  state.status == QuizStateStatus.completed) {}
+                  state.status == QuizStateStatus.completed) {
+                context.pushReplacementTransition(
+                  curve: Curves.easeInOut,
+                  type: PageTransitionType.sharedAxisVertical,
+                  duration: const Duration(milliseconds: 700),
+                  child: QuizResultPage(
+                    correctAnswers: state.correctAnswers,
+                    totalQuestions: state.totalQuestions,
+                    percentage: state.percentage,
+                  ),
+                );
+              }
             },
             builder: (context, state) {
               if (state.status == QuizStateStatus.initial) {
