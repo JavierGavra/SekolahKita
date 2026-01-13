@@ -3,6 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:sekolah_kita/core/theme/theme.dart';
 import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
 import 'package:sekolah_kita/features/course/models/course_types.dart';
+import 'package:sekolah_kita/features/numeration_quiz/views/pages/numeration_quiz_page.dart';
 import 'package:sekolah_kita/features/reading_quiz/views/pages/reading_quiz_page.dart';
 import '../../models/module_model.dart';
 import '../pages/material_content_page.dart';
@@ -34,7 +35,11 @@ class ModuleCard extends StatelessWidget {
       context.pushTransition(
         curve: Curves.easeIn,
         type: PageTransitionType.rightToLeft,
-        child: ReadingQuizPage(),
+        child: switch (type) {
+          CourseType.reading => ReadingQuizPage(),
+          CourseType.writing => ReadingQuizPage(),
+          CourseType.numeration => NumerationQuizPage(),
+        },
       );
     }
   }

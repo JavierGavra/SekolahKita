@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sekolah_kita/core/bloc/provider.dart';
 import 'package:sekolah_kita/core/theme/theme.dart';
-import 'package:sekolah_kita/features/reading_quiz/views/pages/reading_quiz_page.dart';
-import 'package:sekolah_kita/features/reading_quiz/views/pages/reading_quiz_result_page.dart';
 import 'package:sekolah_kita/features/splashscreen/views/pages/splashscreen.dart';
 
 void main() {

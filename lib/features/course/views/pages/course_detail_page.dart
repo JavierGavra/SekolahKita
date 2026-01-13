@@ -17,7 +17,7 @@ class CourseDetailPage extends StatelessWidget {
     final CourseModel course = switch (type) {
       CourseType.reading => LocalService().getReadingCourse(),
       CourseType.writing => LocalService().getWrittingCourse(),
-      CourseType.numeration => LocalService().getWrittingCourse(),
+      CourseType.numeration => LocalService().getReadingCourse(),
     };
 
     return Scaffold(
