@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sekolah_kita/core/theme/theme.dart';
 import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
 import 'package:sekolah_kita/features/course/models/course_types.dart';
+import 'package:sekolah_kita/features/numeration_quiz/views/pages/numeration_quiz_page.dart';
+import 'package:sekolah_kita/features/reading_quiz/views/pages/reading_quiz_page.dart';
 import '../../models/module_model.dart';
 import '../pages/material_content_page.dart';
 
@@ -24,16 +27,19 @@ class ModuleCard extends StatelessWidget {
     }
 
     // Jika tipe Materi, buka MaterialContentPage
-    if (module.type == 'Materi') {
+    if (module.type == ModuleType.material) {
       Navigate.push(context, MaterialContentPage(module: module));
     }
     // Jika tipe Kuis, tampilkan coming soon
-    else if (module.type == 'Kuis') {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Halaman kuis akan segera hadir'),
-          duration: Duration(seconds: 2),
-        ),
+    else if (module.type == ModuleType.quiz) {
+      context.pushTransition(
+        curve: Curves.easeIn,
+        type: PageTransitionType.rightToLeft,
+        child: switch (type) {
+          CourseType.reading => ReadingQuizPage(),
+          CourseType.writing => ReadingQuizPage(),
+          CourseType.numeration => NumerationQuizPage(),
+        },
       );
     }
   }
@@ -78,7 +84,7 @@ class ModuleCard extends StatelessWidget {
   }
 
   Widget _buildIcon(ColorScheme color) {
-    final isMateri = module.type.toLowerCase() == "materi";
+    final isMateri = module.type == ModuleType.material;
     return Container(
       width: 48,
       height: 48,
@@ -99,7 +105,7 @@ class ModuleCard extends StatelessWidget {
   }
 
   Widget _buildTypeChip(ColorScheme color) {
-    final isMateri = module.type.toLowerCase() == 'materi';
+    final isMateri = module.type == ModuleType.material;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
@@ -107,7 +113,7 @@ class ModuleCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
-        module.type,
+        isMateri ? "Materi" : "Kuis",
         style: TextStyle(
           fontWeight: FontWeight.w500,
           height: 1.333,

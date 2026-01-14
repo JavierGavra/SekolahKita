@@ -10,24 +10,24 @@ class LocalService {
         difficulty: 1,
         imagePath: '🐱',
       ),
-      ReadingQuizModel(
-        number: 3,
-        text: 'Makan',
-        difficulty: 1,
-        imagePath: '🍽️',
-      ),
-      ReadingQuizModel(
-        number: 4,
-        text: 'Kecil',
-        difficulty: 2,
-        imagePath: '🐱',
-      ),
-      ReadingQuizModel(
-        number: 5,
-        text: 'Besar',
-        difficulty: 2,
-        imagePath: '📚',
-      ),
+      // ReadingQuizModel(
+      //   number: 3,
+      //   text: 'Makan',
+      //   difficulty: 1,
+      //   imagePath: '🍽️',
+      // ),
+      // ReadingQuizModel(
+      //   number: 4,
+      //   text: 'Kecil',
+      //   difficulty: 2,
+      //   imagePath: '🐱',
+      // ),
+      // ReadingQuizModel(
+      //   number: 5,
+      //   text: 'Besar',
+      //   difficulty: 2,
+      //   imagePath: '📚',
+      // ),
       // ReadingQuizModel(number: 6, text: 'Suka', difficulty: 2, imagePath: '📖'),
       // ReadingQuizModel(
       //   number: 7,
