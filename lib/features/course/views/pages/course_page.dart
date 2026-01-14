@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sekolah_kita/features/course/models/course_types.dart';
+import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/features/course/views/widgets/course_card.dart';
 import 'package:sekolah_kita/features/course/views/widgets/course_header.dart';
 

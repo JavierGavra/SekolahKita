@@ -1,3 +1,4 @@
+import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalDataPersisance {
@@ -23,6 +24,14 @@ class LocalDataPersisance {
 
   String? get getLastCourse => _prefs?.getString("last_course");
 
+  int? getLastModuleIndex(CourseType type) {
+    return _prefs?.getInt(switch (type) {
+      CourseType.reading => "reading_last_module_index",
+      CourseType.writing => "writing_last_module_index",
+      CourseType.numeration => "numeration_last_module_index",
+    });
+  }
+
   Future<void> setIsFirstOpen(bool value) async {
     await _prefs?.setBool('is_first_open', value);
   }
@@ -37,6 +46,14 @@ class LocalDataPersisance {
 
   Future<void> setLastCourse(String value) async {
     await _prefs?.setString('last_course', value);
+  }
+
+  Future<void> setLastModuleIndex(CourseType type, int value) async {
+    await _prefs?.setInt(switch (type) {
+      CourseType.reading => "reading_last_module_index",
+      CourseType.writing => "writing_last_module_index",
+      CourseType.numeration => "numeration_last_module_index",
+    }, value);
   }
 
   Future<void> removeUsername() async {

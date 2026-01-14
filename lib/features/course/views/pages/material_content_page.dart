@@ -6,10 +6,7 @@ import '../../services/material_service.dart';
 class MaterialContentPage extends StatefulWidget {
   final ModuleModel module;
 
-  const MaterialContentPage({
-    super.key,
-    required this.module,
-  });
+  const MaterialContentPage({super.key, required this.module});
 
   @override
   State<MaterialContentPage> createState() => _MaterialContentPageState();
@@ -33,7 +30,9 @@ class _MaterialContentPageState extends State<MaterialContentPage> {
     // Simulasi loading - nanti bisa diganti dengan API call
     Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
-        material = MaterialService.getMaterialByModuleId(widget.module.id);
+        material = MaterialService.getMaterialByModuleId(
+          widget.module.id.toString(),
+        );
         isLoading = false;
       });
     });
@@ -42,7 +41,7 @@ class _MaterialContentPageState extends State<MaterialContentPage> {
   void _onComplete() {
     // TODO: Implement logic untuk mark as completed
     // Misalnya: update database, update state management, dll
-    
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -84,11 +83,7 @@ class _MaterialContentPageState extends State<MaterialContentPage> {
         ),
       ),
       body: isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                color: color.primary,
-              ),
-            )
+          ? Center(child: CircularProgressIndicator(color: color.primary))
           : Column(
               children: [
                 Expanded(
@@ -206,46 +201,48 @@ class _MaterialContentPageState extends State<MaterialContentPage> {
       case 'list':
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: section.listItems?.asMap().entries.map((entry) {
-            final index = entry.key;
-            final item = entry.value;
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 6, right: 12),
-                    width: 24,
-                    height: 24,
-                    decoration: BoxDecoration(
-                      color: color.primaryContainer,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Text(
-                        '${index + 1}',
-                        style: TextStyle(
-                          color: color.primary,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
+          children:
+              section.listItems?.asMap().entries.map((entry) {
+                final index = entry.key;
+                final item = entry.value;
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 6, right: 12),
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          color: color.primaryContainer,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${index + 1}',
+                            style: TextStyle(
+                              color: color.primary,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      item,
-                      style: textTheme.bodyLarge?.copyWith(
-                        height: 1.6,
-                        color: color.onSurface,
+                      Expanded(
+                        child: Text(
+                          item,
+                          style: textTheme.bodyLarge?.copyWith(
+                            height: 1.6,
+                            color: color.onSurface,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          }).toList() ?? [],
+                );
+              }).toList() ??
+              [],
         );
 
       case 'highlight':
@@ -254,21 +251,14 @@ class _MaterialContentPageState extends State<MaterialContentPage> {
           decoration: BoxDecoration(
             color: color.primaryContainer.withOpacity(0.3),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: color.primary.withOpacity(0.2),
-              width: 1,
-            ),
+            border: Border.all(color: color.primary.withOpacity(0.2), width: 1),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Icon(
-                    Icons.lightbulb_outline,
-                    color: color.primary,
-                    size: 20,
-                  ),
+                  Icon(Icons.lightbulb_outline, color: color.primary, size: 20),
                   const SizedBox(width: 8),
                   Text(
                     section.highlightTitle ?? 'Perhatian',

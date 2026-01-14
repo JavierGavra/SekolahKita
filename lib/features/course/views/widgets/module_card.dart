@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:sekolah_kita/core/database/local_data_persisance.dart';
+import 'package:sekolah_kita/core/database/static/models/module_model.dart';
 import 'package:sekolah_kita/core/theme/theme.dart';
-import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
-import 'package:sekolah_kita/features/course/models/course_types.dart';
-import 'package:sekolah_kita/features/numeration_quiz/views/pages/numeration_quiz_page.dart';
-import 'package:sekolah_kita/features/reading_quiz/views/pages/reading_quiz_page.dart';
-import '../../models/module_model.dart';
-import '../pages/material_content_page.dart';
+import 'package:sekolah_kita/core/constant/enum.dart';
+import 'package:sekolah_kita/core/widgets/custom_snackbar.dart';
+import 'package:sekolah_kita/features/quiz/views/pages/quiz_page.dart';
 
 class ModuleCard extends StatelessWidget {
   final ModuleModel module;
   final CourseType type;
+  final bool isLocked;
+  final bool isCompleted;
 
-  const ModuleCard({super.key, required this.module, required this.type});
+  const ModuleCard({
+    super.key,
+    required this.module,
+    required this.type,
+    required this.isLocked,
+    required this.isCompleted,
+  });
 
-  void _onTap(BuildContext context) {
+  void _onTap(BuildContext context, int id) {
     // Jika modul locked, tampilkan snackbar
-    if (module.isLocked) {
+    if (isLocked) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Selesaikan modul sebelumnya terlebih dahulu'),
@@ -26,20 +33,23 @@ class ModuleCard extends StatelessWidget {
       return;
     }
 
+    LocalDataPersisance().setLastCourse(switch (type) {
+      CourseType.reading => "reading",
+      CourseType.writing => "writing",
+      CourseType.numeration => "numeration",
+    });
+
     // Jika tipe Materi, buka MaterialContentPage
     if (module.type == ModuleType.material) {
-      Navigate.push(context, MaterialContentPage(module: module));
+      // Navigate.push(context, MaterialContentPage(module: module));
+      showSnackBar(context, SnackBarType.commingSoon);
     }
     // Jika tipe Kuis, tampilkan coming soon
     else if (module.type == ModuleType.quiz) {
       context.pushTransition(
         curve: Curves.easeIn,
         type: PageTransitionType.rightToLeft,
-        child: switch (type) {
-          CourseType.reading => ReadingQuizPage(),
-          CourseType.writing => ReadingQuizPage(),
-          CourseType.numeration => NumerationQuizPage(),
-        },
+        child: QuizPage(id: id, type: type),
       );
     }
   }
@@ -58,11 +68,11 @@ class ModuleCard extends StatelessWidget {
       color: color.surfaceContainerLowest,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
-        onTap: () => _onTap(context),
+        onTap: () => _onTap(context, module.id),
         splashColor: color.primaryContainer,
         borderRadius: BorderRadius.circular(16),
         child: Opacity(
-          opacity: module.isLocked ? 0.6 : 1,
+          opacity: isLocked ? 0.6 : 1,
           child: Ink(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -74,7 +84,7 @@ class ModuleCard extends StatelessWidget {
                 _buildIcon(color),
                 const SizedBox(width: 16),
                 Expanded(child: _buildContent(color)),
-                if (module.isCompleted) _buildCompletedIndicator(color),
+                if (isCompleted) _buildCompletedIndicator(color),
               ],
             ),
           ),
@@ -93,7 +103,7 @@ class ModuleCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(
-        (module.isLocked)
+        (isLocked)
             ? Icons.lock_outline_rounded
             : (isMateri)
             ? Icons.menu_book_rounded
@@ -140,7 +150,7 @@ class ModuleCard extends StatelessWidget {
         Row(
           children: [
             _buildTypeChip(color),
-            if (module.isCompleted) ...[
+            if (isCompleted) ...[
               const SizedBox(width: 8),
               Icon(
                 Icons.check_circle_outline_rounded,

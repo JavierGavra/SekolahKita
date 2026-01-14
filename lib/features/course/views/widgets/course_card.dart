@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sekolah_kita/core/constant/svg_assets.dart';
 import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
-import 'package:sekolah_kita/features/course/models/course_types.dart';
+import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/features/course/views/pages/course_detail_page.dart';
 
 class CourseCard extends StatelessWidget {
