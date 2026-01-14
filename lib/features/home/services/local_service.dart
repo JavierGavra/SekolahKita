@@ -1,40 +1,25 @@
 import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/database/static/data/module_data.dart';
-import 'package:sekolah_kita/core/database/static/models/module_model.dart';
 
 class LocalService {
-  final data = ModuleData();
-
-  List<ModuleModel> getReadingModules() {
-    return data.getReadingModules();
-  }
-
-  List<ModuleModel> getWritingModules() {
-    return data.getWritingModules();
-  }
-
-  List<ModuleModel> getNumerationModules() {
-    return data.getNumerationModules();
-  }
-
   double getCourseProgress(CourseType type) {
     final lastModuleIndex = LocalDataPersisance().getLastModuleIndex(type);
     final moduleAmount = switch (type) {
-      CourseType.reading => data.getReadingModules(),
-      CourseType.writing => data.getReadingModules(),
-      CourseType.numeration => data.getReadingModules(),
+      CourseType.reading => ModuleData().getReadingModules(),
+      CourseType.writing => ModuleData().getReadingModules(),
+      CourseType.numeration => ModuleData().getReadingModules(),
     }.length;
 
     return lastModuleIndex! / moduleAmount;
   }
 
-  double getOverallProgress() {
+  int getOverallProgress() {
     final sum =
         getCourseProgress(CourseType.reading) +
         getCourseProgress(CourseType.writing) +
         getCourseProgress(CourseType.numeration);
 
-    return sum / 3;
+    return ((sum / 3) * 100).round();
   }
 }

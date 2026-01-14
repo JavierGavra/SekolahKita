@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
+import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/database/static/models/question/multiple_choice_question.dart';
 import 'package:sekolah_kita/core/database/static/models/question/speech_question.dart';
 import 'package:sekolah_kita/core/database/static/models/quiz_question_model.dart';
@@ -78,6 +79,10 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
 
               if (state.isLastQuestion &&
                   state.status == QuizStateStatus.completed) {
+                LocalDataPersisance().setLastModuleIndex(
+                  widget.type,
+                  widget.id,
+                );
                 context.pushReplacementTransition(
                   curve: Curves.easeInOut,
                   type: PageTransitionType.sharedAxisVertical,
@@ -181,6 +186,6 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
       );
     }
 
-    return CircularProgressIndicator();
+    return Expanded(child: Center(child: CircularProgressIndicator()));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
+import 'package:sekolah_kita/features/home/services/local_service.dart';
 import 'package:sekolah_kita/features/home/views/widgets/continue_course_card.dart';
 import 'package:sekolah_kita/features/home/views/widgets/greeting_card.dart';
 import 'package:sekolah_kita/features/home/views/widgets/header_section.dart';
@@ -41,7 +42,7 @@ class HomePage extends StatelessWidget {
                   SizedBox(height: 16),
                   ContinueCourseCard(
                     type: lastCourse,
-                    progress: 0.67,
+                    progress: LocalService().getCourseProgress(lastCourse),
                     myStars: 3,
                   ),
                 ],

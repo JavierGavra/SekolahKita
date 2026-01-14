@@ -115,7 +115,7 @@ class CourseCard extends StatelessWidget {
             ),
           ),
           Text(
-            "${progress * 100}%",
+            "${(progress * 100).round()}%",
             style: TextStyle(
               color: accentColor,
               fontWeight: FontWeight.w600,
@@ -126,11 +126,19 @@ class CourseCard extends StatelessWidget {
         ],
       ),
       SizedBox(height: 6),
-      LinearProgressIndicator(
-        value: progress,
-        minHeight: 6,
-        color: accentColor,
-        backgroundColor: color.surfaceContainerHigh,
+      TweenAnimationBuilder<double>(
+        tween: Tween<double>(begin: 0, end: progress.clamp(0.0, 1.0)),
+        duration: const Duration(milliseconds: 900),
+        curve: Curves.easeOutCubic,
+        builder: (context, value, child) {
+          return LinearProgressIndicator(
+            value: value,
+            minHeight: 6,
+            color: accentColor,
+            borderRadius: BorderRadius.circular(6),
+            backgroundColor: color.surfaceContainerHigh,
+          );
+        },
       ),
     ];
   }

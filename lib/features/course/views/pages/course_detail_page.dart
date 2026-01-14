@@ -61,7 +61,7 @@ class CourseDetailPage extends StatelessWidget {
                         module: module,
                         type: type,
                         isLocked: module.id > lastModuleIndex + 1,
-                        isCompleted: module.id < lastModuleIndex,
+                        isCompleted: module.id <= lastModuleIndex,
                       ),
                     ),
                   ),

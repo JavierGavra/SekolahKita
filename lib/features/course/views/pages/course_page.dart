@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
+import 'package:sekolah_kita/features/course/services/local_service.dart';
 import 'package:sekolah_kita/features/course/views/widgets/course_card.dart';
 import 'package:sekolah_kita/features/course/views/widgets/course_header.dart';
 
@@ -11,11 +12,11 @@ class CoursePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          CourseHeader(),
+          const CourseHeader(),
           Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-            child: const Column(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -26,22 +27,28 @@ class CoursePage extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 CourseCard(
                   type: CourseType.reading,
-                  progress: 0.65,
+                  progress: LocalService().getCourseProgress(
+                    CourseType.reading,
+                  ),
                   myStars: 3,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 CourseCard(
                   type: CourseType.writing,
-                  progress: 0.42,
+                  progress: LocalService().getCourseProgress(
+                    CourseType.writing,
+                  ),
                   myStars: 2,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 CourseCard(
                   type: CourseType.numeration,
-                  progress: 0.78,
+                  progress: LocalService().getCourseProgress(
+                    CourseType.numeration,
+                  ),
                   myStars: 4,
                 ),
               ],
