@@ -163,7 +163,7 @@ class CourseDetailHeader extends StatelessWidget {
                 ),
               ),
               Text(
-                '${(progress * 100).toInt()}%',
+                '${(progress * 100).round()}%',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16,
@@ -173,14 +173,19 @@ class CourseDetailHeader extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(
-              value: progress,
-              backgroundColor: back,
-              valueColor: AlwaysStoppedAnimation<Color>(fore),
-              minHeight: 10,
-            ),
+          TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 0, end: progress.clamp(0.0, 1.0)),
+            duration: const Duration(milliseconds: 900),
+            curve: Curves.easeOutCubic,
+            builder: (context, value, child) {
+              return LinearProgressIndicator(
+                value: value,
+                minHeight: 10,
+                color: fore,
+                borderRadius: BorderRadius.circular(6),
+                backgroundColor: back,
+              );
+            },
           ),
         ],
       ),

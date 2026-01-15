@@ -24,6 +24,24 @@ class ReadingQuizData {
           correctAnswerId: 0,
         ),
         SpeechQuestion(id: 2, text: "Amba"),
+        ListeningQuestion(
+          id: 3,
+          text: "Ba",
+          options: ['Ba', 'Da', 'Sa', 'Ca'],
+          correctAnswerId: 0,
+        ),
+        ListeningQuestion(
+          id: 4,
+          text: "Sa",
+          options: ['Ba', 'Da', 'Sa', 'Ca'],
+          correctAnswerId: 2,
+        ),
+        ListeningQuestion(
+          id: 5,
+          text: "Rusdi",
+          options: ['Rusdi', 'Surdi', 'Ardi', 'Radi'],
+          correctAnswerId: 0,
+        ),
       ],
     ),
   ];

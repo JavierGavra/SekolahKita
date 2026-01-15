@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sekolah_kita/core/constant/svg_assets.dart';
-import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/features/course/views/pages/course_detail_page.dart';
 
@@ -17,8 +17,12 @@ class CourseCard extends StatelessWidget {
     required this.myStars,
   });
 
-  void _onTap(BuildContext context) =>
-      Navigate.push(context, CourseDetailPage(type: type));
+  void _onTap(BuildContext context) => context.pushTransition(
+    curve: Curves.easeIn,
+    duration: const Duration(milliseconds: 200),
+    type: PageTransitionType.fade,
+    child: CourseDetailPage(type: type),
+  );
 
   @override
   Widget build(BuildContext context) {

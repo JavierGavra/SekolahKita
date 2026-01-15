@@ -66,7 +66,12 @@ class HeaderSection extends StatelessWidget {
           "Progress",
           "${LocalService().getOverallProgress()}%",
         ),
-        _buildQuickInfoItem(color, Icons.book_rounded, "Modul", "12"),
+        _buildQuickInfoItem(
+          color,
+          Icons.book_rounded,
+          "Modul",
+          "${LocalService().getTotalModule()}",
+        ),
         _buildQuickInfoItem(color, Icons.stars_rounded, "Bintang", "9/15"),
       ],
     );

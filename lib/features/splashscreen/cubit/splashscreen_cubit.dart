@@ -26,7 +26,7 @@ class SplashscreenCubit extends Cubit<SplashscreenState> {
       if (LocalDataPersisance().getIsFirstOpen ?? true) {
         LocalDataPersisance()
           ..setLastModuleIndex(CourseType.reading, 1)
-          ..setLastModuleIndex(CourseType.writing, 1)
+          ..setLastModuleIndex(CourseType.writing, 2)
           ..setLastModuleIndex(CourseType.numeration, 1);
       }
 
