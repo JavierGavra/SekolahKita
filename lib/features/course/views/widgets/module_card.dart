@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/database/static/models/module_model.dart';
 import 'package:sekolah_kita/core/theme/theme.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/core/widgets/custom_snackbar.dart';
+import 'package:sekolah_kita/features/course/cubit/course_detail/course_detail_cubit.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/quiz_page.dart';
 
 class ModuleCard extends StatelessWidget {
@@ -21,7 +23,7 @@ class ModuleCard extends StatelessWidget {
     required this.isCompleted,
   });
 
-  void _onTap(BuildContext context, int id) {
+  void _onTap(BuildContext context, int id) async {
     // Jika modul locked, tampilkan snackbar
     if (isLocked) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -43,14 +45,13 @@ class ModuleCard extends StatelessWidget {
     if (module.type == ModuleType.material) {
       // Navigate.push(context, MaterialContentPage(module: module));
       showSnackBar(context, SnackBarType.commingSoon);
-    }
-    // Jika tipe Kuis, tampilkan coming soon
-    else if (module.type == ModuleType.quiz) {
-      context.pushTransition(
+    } else if (module.type == ModuleType.quiz) {
+      await context.pushTransition(
         curve: Curves.easeIn,
         type: PageTransitionType.rightToLeft,
         child: QuizPage(moduleId: id, type: type),
       );
+      if (context.mounted) context.read<CourseDetailCubit>().loadData();
     }
   }
 

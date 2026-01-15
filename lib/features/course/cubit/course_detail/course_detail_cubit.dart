@@ -1,8 +1,44 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:sekolah_kita/core/constant/enum.dart';
+import 'package:sekolah_kita/core/database/local_data_persisance.dart';
+import 'package:sekolah_kita/core/database/static/models/module_model.dart';
+import 'package:sekolah_kita/features/course/services/local_service.dart';
 
 part 'course_detail_state.dart';
 
 class CourseDetailCubit extends Cubit<CourseDetailState> {
-  CourseDetailCubit() : super(CourseDetailInitial());
+  final _localService = LocalService();
+  late final CourseType type;
+
+  CourseDetailCubit() : super(CourseDetailState.initial());
+
+  void initData(CourseType type) {
+    this.type = type;
+    loadData();
+  }
+
+  void loadData() {
+    emit(state.copyWith(status: CourseDetailStateStatus.loading));
+
+    final lastModuleIndex = LocalDataPersisance().getLastModuleIndex(type)!;
+
+    final modules = switch (type) {
+      CourseType.reading => _localService.getReadingModules(),
+      CourseType.writing => _localService.getWritingModules(),
+      CourseType.numeration => _localService.getNumerationModules(),
+    };
+
+    final progress = _localService.getCourseProgress(type);
+
+    emit(
+      state.copyWith(
+        status: CourseDetailStateStatus.success,
+        lastModuleIndex: lastModuleIndex,
+        moduleAmount: modules.length,
+        modules: modules,
+        progress: progress,
+      ),
+    );
+  }
 }

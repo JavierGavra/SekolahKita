@@ -22,4 +22,11 @@ class LocalService {
 
     return ((sum / 3) * 100).round();
   }
+
+  int getTotalModule() {
+    final localData = LocalDataPersisance();
+    return localData.getLastModuleIndex(CourseType.reading)! +
+        localData.getLastModuleIndex(CourseType.writing)! +
+        localData.getLastModuleIndex(CourseType.numeration)!;
+  }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sekolah_kita/features/course/cubit/course/course_cubit.dart';
 
 class QuizResultPage extends StatelessWidget {
   final int correctAnswers;
@@ -42,6 +44,9 @@ class QuizResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+
+    context.read<CourseCubit>().loadData();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
