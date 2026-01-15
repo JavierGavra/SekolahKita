@@ -3,7 +3,7 @@ import 'package:sekolah_kita/core/database/static/models/question/listening_ques
 import 'package:sekolah_kita/core/database/static/models/question/multiple_choice_question.dart';
 import 'package:sekolah_kita/core/database/static/models/question/multiple_sound_question.dart';
 import 'package:sekolah_kita/core/database/static/models/question/speech_question.dart';
-import 'package:sekolah_kita/core/database/static/models/question/wirting_trace_question.dart';
+import 'package:sekolah_kita/core/database/static/models/question/writing_trace_question.dart';
 import 'package:sekolah_kita/core/database/static/models/quiz_model.dart';
 import 'package:sekolah_kita/core/database/static/models/quiz_question_model.dart';
 
