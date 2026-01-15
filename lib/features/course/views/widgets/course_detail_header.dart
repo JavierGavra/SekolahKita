@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sekolah_kita/core/constant/svg_assets.dart';
-import 'package:sekolah_kita/features/course/models/course_types.dart';
+import 'package:sekolah_kita/core/constant/enum.dart';
 
 class CourseDetailHeader extends StatelessWidget {
   final int completedModules;

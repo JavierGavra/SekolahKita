@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/widgets/online_chip.dart';
+import 'package:sekolah_kita/features/course/services/local_service.dart';
 
 class CourseHeader extends StatelessWidget {
   const CourseHeader({super.key});
@@ -56,6 +57,7 @@ class CourseHeader extends StatelessWidget {
   }
 
   Widget _buildProgressCard(ColorScheme color) {
+    final progress = LocalService().getOverallProgress();
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -91,7 +93,7 @@ class CourseHeader extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 7),
                 child: Text(
-                  '62%',
+                  '${(progress * 100).round()}%',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: color.onPrimary,
@@ -103,14 +105,21 @@ class CourseHeader extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(
-              value: 0.62,
-              minHeight: 8,
-              backgroundColor: color.primary,
-              valueColor: AlwaysStoppedAnimation<Color>(color.primaryContainer),
-            ),
+          TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 0, end: progress.clamp(0.0, 1.0)),
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeOutCubic,
+            builder: (context, value, child) {
+              return LinearProgressIndicator(
+                value: value,
+                minHeight: 8,
+                backgroundColor: color.primary,
+                borderRadius: BorderRadius.circular(8),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  color.primaryContainer,
+                ),
+              );
+            },
           ),
         ],
       ),

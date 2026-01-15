@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/widgets/online_chip.dart';
+import 'package:sekolah_kita/features/home/services/local_service.dart';
 
 class HeaderSection extends StatelessWidget {
   const HeaderSection({super.key});
@@ -63,7 +64,7 @@ class HeaderSection extends StatelessWidget {
           color,
           Icons.trending_up_rounded,
           "Progress",
-          "67%",
+          "${LocalService().getOverallProgress()}%",
         ),
         _buildQuickInfoItem(color, Icons.book_rounded, "Modul", "12"),
         _buildQuickInfoItem(color, Icons.stars_rounded, "Bintang", "9/15"),

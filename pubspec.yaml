@@ -24,6 +24,8 @@ dependencies:
   page_transition: ^2.2.1
   lottie: ^3.3.2
   speech_to_text: ^7.3.0
+  signature: ^6.3.0
+  flutter_tts: ^4.2.5
 
 dev_dependencies:
   flutter_test:

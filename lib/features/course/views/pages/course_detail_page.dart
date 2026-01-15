@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sekolah_kita/features/course/models/course_types.dart';
+import 'package:sekolah_kita/core/constant/enum.dart';
+import 'package:sekolah_kita/core/database/local_data_persisance.dart';
+import 'package:sekolah_kita/core/database/static/models/module_model.dart';
 import '../../services/local_service.dart';
-import '../../models/course_model.dart';
 import '../widgets/course_detail_header.dart';
 import '../widgets/module_card.dart';
 import '../widgets/info_card.dart';
@@ -14,10 +15,11 @@ class CourseDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
-    final CourseModel course = switch (type) {
-      CourseType.reading => LocalService().getReadingCourse(),
-      CourseType.writing => LocalService().getWrittingCourse(),
-      CourseType.numeration => LocalService().getReadingCourse(),
+    int lastModuleIndex = LocalDataPersisance().getLastModuleIndex(type) ?? -1;
+    final List<ModuleModel> modules = switch (type) {
+      CourseType.reading => LocalService().getReadingModules(),
+      CourseType.writing => LocalService().getWritingModules(),
+      CourseType.numeration => LocalService().getNumerationModules(),
     };
 
     return Scaffold(
@@ -26,9 +28,9 @@ class CourseDetailPage extends StatelessWidget {
         child: Column(
           children: [
             CourseDetailHeader(
-              completedModules: course.completedModules,
-              totalModules: course.totalModules,
-              progress: course.progress,
+              completedModules: 2,
+              totalModules: modules.length,
+              progress: 0.2,
               type: type,
             ),
             Container(
@@ -52,10 +54,15 @@ class CourseDetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  ...course.modules.map(
+                  ...modules.map(
                     (module) => Padding(
                       padding: const EdgeInsets.only(bottom: 12),
-                      child: ModuleCard(module: module, type: type),
+                      child: ModuleCard(
+                        module: module,
+                        type: type,
+                        isLocked: module.id > lastModuleIndex + 1,
+                        isCompleted: module.id <= lastModuleIndex,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 12),
