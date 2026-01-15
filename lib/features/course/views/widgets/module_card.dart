@@ -49,7 +49,7 @@ class ModuleCard extends StatelessWidget {
       context.pushTransition(
         curve: Curves.easeIn,
         type: PageTransitionType.rightToLeft,
-        child: QuizPage(id: id, type: type),
+        child: QuizPage(moduleId: id, type: type),
       );
     }
   }

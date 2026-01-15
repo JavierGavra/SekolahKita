@@ -1,12 +1,12 @@
 import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/core/database/static/models/quiz_question_model.dart';
 
-/// Pilihasn ganda sederhana dengan 4 pilihan jawaban
-class MultipleChoiceQuestion extends QuizQuestionModel {
-  /// Pertanyaan yang akan ditampilkan
-  final String question;
+/// Tes mendengarkan suara lalu menebak huruf/kata/kalimat apa yang terdengar
+class ListeningQuestion extends QuizQuestionModel {
+  /// Huryf/Kata/Kalimat yang akan di dengar oleh User
+  final String text;
 
-  /// Opsional (Tidak terlalu penting)
+  /// Opsional (tidak teralu penting)
   final String? imagePath;
 
   /// Pilihan jawaban (4 pilihan)
@@ -15,9 +15,9 @@ class MultipleChoiceQuestion extends QuizQuestionModel {
   /// Index jawaban benar dari array [options]
   final int correctAnswerId;
 
-  MultipleChoiceQuestion({
+  ListeningQuestion({
     required super.id,
-    required this.question,
+    required this.text,
     this.imagePath,
     required this.options,
     required this.correctAnswerId,

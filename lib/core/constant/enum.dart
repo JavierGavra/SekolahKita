@@ -4,4 +4,11 @@ enum ModuleType { material, quiz }
 
 enum ModulStatus { locked, available, completed }
 
-enum QuizQuestionType { speechRecognition, multipleChooice, textField }
+enum QuizQuestionType {
+  speechRecognition,
+  multipleChooice,
+  textField,
+  listening,
+  multipleSound,
+  writingTrace,
+}

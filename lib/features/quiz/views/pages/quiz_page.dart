@@ -3,22 +3,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
+import 'package:sekolah_kita/core/database/static/models/question/listening_question.dart';
 import 'package:sekolah_kita/core/database/static/models/question/multiple_choice_question.dart';
 import 'package:sekolah_kita/core/database/static/models/question/speech_question.dart';
 import 'package:sekolah_kita/core/database/static/models/quiz_question_model.dart';
 import 'package:sekolah_kita/features/quiz/bloc/quiz_bloc.dart';
+import 'package:sekolah_kita/features/quiz/cubit/listening/listening_cubit.dart';
 import 'package:sekolah_kita/features/quiz/cubit/multiple_choice/multiple_choice_cubit.dart';
 import 'package:sekolah_kita/features/quiz/cubit/speech/speech_cubit.dart';
+import 'package:sekolah_kita/features/quiz/views/pages/listening_view.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/multiple_choice_view.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/quiz_result_page.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/speech_view.dart';
 import 'package:sekolah_kita/features/quiz/views/widgets/exit_dialog.dart';
 
 class QuizPage extends StatefulWidget {
-  final int id;
+  final int moduleId;
   final CourseType type;
 
-  const QuizPage({super.key, required this.id, required this.type});
+  const QuizPage({super.key, required this.moduleId, required this.type});
 
   @override
   State<QuizPage> createState() => _QuizPageState();
@@ -70,7 +73,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
 
     return BlocProvider(
       create: (context) =>
-          QuizBloc()..add(QuizStarted(id: widget.id, type: widget.type)),
+          QuizBloc()..add(QuizStarted(id: widget.moduleId, type: widget.type)),
       child: Scaffold(
         body: SafeArea(
           child: BlocConsumer<QuizBloc, QuizState>(
@@ -81,7 +84,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                   state.status == QuizStateStatus.completed) {
                 LocalDataPersisance().setLastModuleIndex(
                   widget.type,
-                  widget.id,
+                  widget.moduleId,
                 );
                 context.pushReplacementTransition(
                   curve: Curves.easeInOut,
@@ -183,6 +186,12 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
         key: ValueKey(question.id),
         create: (context) => SpeechCubit()..startQuiz(question),
         child: SpeechView(),
+      );
+    } else if (question is ListeningQuestion) {
+      return BlocProvider(
+        key: ValueKey(question.id),
+        create: (context) => ListeningCubit()..startQuiz(question),
+        child: ListeningView(),
       );
     }
 

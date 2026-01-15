@@ -6,6 +6,8 @@ import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/core/database/static/models/quiz_question_model.dart';
 import '../services/local_service.dart';
 
+// import 'package:sekolah_kita/core/database/static/data/example_quiz_data.dart';
+
 part 'quiz_event.dart';
 part 'quiz_state.dart';
 
@@ -22,6 +24,9 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     Emitter<QuizState> emit,
   ) async {
     try {
+      // EXAMPLE QUIZ
+      // final questions = ExampleQuizData().getQuestion();
+
       final questions = _localService.getQuestions(event.type, event.id);
 
       emit(state.copyWith(status: QuizStateStatus.ready, questions: questions));

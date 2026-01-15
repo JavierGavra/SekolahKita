@@ -12,6 +12,9 @@ abstract class QuizQuestionModel {
         "Baca kata atau kalimat\ndi bawah ini!",
       QuizQuestionType.multipleChooice => "Pilih 1 jawaban!",
       QuizQuestionType.textField => "Isi kotak di bawah!",
+      QuizQuestionType.listening => "Kata atau Kalimat apa\nyang terdegar?",
+      QuizQuestionType.multipleSound => "Pilih suara yang cocok!",
+      QuizQuestionType.writingTrace => "Gambar sesuai pola",
     };
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sekolah_kita/features/quiz/cubit/speech/speech_cubit.dart';
+import 'package:sekolah_kita/features/quiz/services/tts_service.dart';
 
 class MicrophoneButton extends StatelessWidget {
   const MicrophoneButton({super.key});
@@ -21,7 +22,10 @@ class MicrophoneButton extends StatelessWidget {
             state.status == SpeechStateStatus.answered) {
           onTap = () {};
         } else {
-          onTap = () => context.read<SpeechCubit>().listeningStarted();
+          onTap = () {
+            TtsService().stop();
+            context.read<SpeechCubit>().listeningStarted();
+          };
         }
 
         if (state.status != SpeechStateStatus.listening) {

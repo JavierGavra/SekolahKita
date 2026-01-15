@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sekolah_kita/core/widgets/quiz_snackbar.dart';
 import 'package:sekolah_kita/features/quiz/bloc/quiz_bloc.dart';
 import 'package:sekolah_kita/features/quiz/cubit/speech/speech_cubit.dart';
+import 'package:sekolah_kita/features/quiz/services/tts_service.dart';
 import 'package:sekolah_kita/features/quiz/views/widgets/microphone_button.dart';
 
 class SpeechView extends StatelessWidget {
@@ -67,23 +68,41 @@ class SpeechView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(32),
-                  decoration: BoxDecoration(
-                    color: color.primaryContainer,
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  child: Text(
-                    question.text,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: color.onPrimaryContainer,
-                      fontWeight: FontWeight.bold,
-                      height: 1.333,
-                      fontSize: 24,
+                Stack(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(32),
+                      decoration: BoxDecoration(
+                        color: color.primaryContainer,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Text(
+                        question.text,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: color.onPrimaryContainer,
+                          fontWeight: FontWeight.bold,
+                          height: 1.333,
+                          fontSize: 24,
+                        ),
+                      ),
                     ),
-                  ),
+                    Positioned(
+                      right: 2,
+                      bottom: 2,
+                      child: IconButton.filled(
+                        onPressed: () {
+                          TtsService().speak(question.text);
+                        },
+                        color: color.onSurface,
+                        style: IconButton.styleFrom(
+                          backgroundColor: color.surface,
+                        ),
+                        icon: Icon(Icons.volume_up_rounded),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 60),
                 MicrophoneButton(),
