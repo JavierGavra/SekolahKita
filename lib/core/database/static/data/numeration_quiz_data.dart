@@ -88,7 +88,7 @@ class NumerationQuizData {
           question: 'Ada berapa ayam di bawah ini \n 🐔🐔🐔🐔🐔🐔',
           imagePath: "",
           options: ['9', '3', '6', '1'],
-          correctAnswerId: 3,
+          correctAnswerId: 2,
         ),
         MultipleChoiceQuestion(
           id: 9,

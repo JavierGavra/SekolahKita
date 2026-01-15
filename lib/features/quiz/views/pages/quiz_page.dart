@@ -45,6 +45,26 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
     _progressController.forward(from: 0);
   }
 
+  void _whenCompleted(QuizState state) {
+    if (state.isLastQuestion && state.status == QuizStateStatus.completed) {
+      final localData = LocalDataPersisance();
+      if (widget.moduleId > localData.getLastModuleIndex(widget.type)!) {
+        localData.setLastModuleIndex(widget.type, widget.moduleId);
+      }
+
+      context.pushReplacementTransition(
+        curve: Curves.easeInOut,
+        type: PageTransitionType.sharedAxisVertical,
+        duration: const Duration(milliseconds: 700),
+        child: QuizResultPage(
+          correctAnswers: state.correctAnswers,
+          totalQuestions: state.totalQuestions,
+          percentage: state.percentage,
+        ),
+      );
+    }
+  }
+
   void _performPop() async {
     final isExit = await showExitQuizDialog(context);
     if (isExit && mounted) Navigator.of(context).pop();
@@ -82,24 +102,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
           child: BlocConsumer<QuizBloc, QuizState>(
             listener: (context, state) {
               _updateProgressAnimation(state);
-
-              if (state.isLastQuestion &&
-                  state.status == QuizStateStatus.completed) {
-                LocalDataPersisance().setLastModuleIndex(
-                  widget.type,
-                  widget.moduleId,
-                );
-                context.pushReplacementTransition(
-                  curve: Curves.easeInOut,
-                  type: PageTransitionType.sharedAxisVertical,
-                  duration: const Duration(milliseconds: 700),
-                  child: QuizResultPage(
-                    correctAnswers: state.correctAnswers,
-                    totalQuestions: state.totalQuestions,
-                    percentage: state.percentage,
-                  ),
-                );
-              }
+              _whenCompleted(state);
             },
             builder: (context, state) {
               if (state.status == QuizStateStatus.initial) {

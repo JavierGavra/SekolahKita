@@ -7,8 +7,8 @@ class LocalService {
     final lastModuleIndex = LocalDataPersisance().getLastModuleIndex(type);
     final moduleAmount = switch (type) {
       CourseType.reading => ModuleData().getReadingModules(),
-      CourseType.writing => ModuleData().getReadingModules(),
-      CourseType.numeration => ModuleData().getReadingModules(),
+      CourseType.writing => ModuleData().getWritingModules(),
+      CourseType.numeration => ModuleData().getNumerationModules(),
     }.length;
 
     return lastModuleIndex! / moduleAmount;
