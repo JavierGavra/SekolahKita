@@ -3,18 +3,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sekolah_kita/core/constant/svg_assets.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
+import 'package:sekolah_kita/features/course/services/local_service.dart';
 import 'package:sekolah_kita/features/course/views/pages/course_detail_page.dart';
 
 class CourseCard extends StatelessWidget {
   final CourseType type;
   final double progress;
-  final int myStars;
+  // final int myStars;
 
   const CourseCard({
     super.key,
     required this.type,
     required this.progress,
-    required this.myStars,
+    // required this.myStars,
   });
 
   void _onTap(BuildContext context) => context.pushTransition(
@@ -148,41 +149,47 @@ class CourseCard extends StatelessWidget {
   }
 
   Widget _buildStars(ColorScheme color) {
-    return Row(
-      children: [
-        ...List.generate(5, (index) {
-          if (index < myStars) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: Icon(
-                Icons.star_rounded,
-                size: 16,
-                color: const Color(0xFFF57C00),
-              ),
-            );
-          } else {
-            return Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: Icon(
-                Icons.star_border_rounded,
-                size: 16,
-                color: color.secondaryContainer,
-              ),
-            );
-          }
-        }),
-        Padding(
-          padding: EdgeInsets.only(right: 2),
-          child: Text(
-            "$myStars/5",
-            style: TextStyle(
-              color: color.onSurfaceVariant,
-              fontSize: 12,
-              height: 1.333,
-            ),
-          ),
-        ),
-      ],
+    return FutureBuilder(
+      future: LocalService().getStarsByCourse(type),
+      builder: (context, asyncSnapshot) {
+        int star = asyncSnapshot.data ?? 0;
+        return Row(
+          children: [
+            ...List.generate(star, (index) {
+              if (index < star) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                  child: Icon(
+                    Icons.star_rounded,
+                    size: 16,
+                    color: const Color(0xFFF57C00),
+                  ),
+                );
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                  child: Icon(
+                    Icons.star_border_rounded,
+                    size: 16,
+                    color: color.secondaryContainer,
+                  ),
+                );
+              }
+            }),
+            // Padding(
+            //   padding: EdgeInsets.only(right: 2),
+            //   child: Text(
+            //     "$myStars/5",
+            //     style: TextStyle(
+            //       color: color.onSurfaceVariant,
+            //       fontSize: 12,
+            //       height: 1.333,
+            //     ),
+            //   ),
+            // ),
+          ],
+        );
+      },
     );
   }
 }

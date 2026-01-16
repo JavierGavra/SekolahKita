@@ -10,7 +10,7 @@ class CourseCubit extends Cubit<CourseState> {
 
   CourseCubit() : super(CourseState.initial());
 
-  void loadData() {
+  void loadData() async {
     emit(state.copyWith(status: CourseStateStatus.loading));
 
     final overallProgress = _localService.getOverallProgress();
@@ -20,12 +20,25 @@ class CourseCubit extends Cubit<CourseState> {
       CourseType.numeration,
     );
 
+    final readingStar = await LocalService().getStarsByCourse(
+      CourseType.reading,
+    );
+    final writingStar = await LocalService().getStarsByCourse(
+      CourseType.writing,
+    );
+    final numerationStar = await LocalService().getStarsByCourse(
+      CourseType.numeration,
+    );
+
     emit(
       state.copyWith(
         status: CourseStateStatus.success,
         overallProgress: overallProgress,
         readingProgress: readingProgress,
         writingProgress: writingProgress,
+        readingStar: readingStar,
+        writingStar: writingStar,
+        numerationsStar: numerationStar,
         numerationProgress: numerationProgress,
       ),
     );

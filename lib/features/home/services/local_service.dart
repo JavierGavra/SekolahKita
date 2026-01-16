@@ -1,4 +1,5 @@
 import 'package:sekolah_kita/core/constant/enum.dart';
+import 'package:sekolah_kita/core/database/database_helper.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/database/static/data/module_data.dart';
 
@@ -28,5 +29,9 @@ class LocalService {
     return localData.getLastModuleIndex(CourseType.reading)! +
         localData.getLastModuleIndex(CourseType.writing)! +
         localData.getLastModuleIndex(CourseType.numeration)!;
+  }
+
+  Future<int> getStars() async {
+    return await DatabaseHelper.instance.getStars();
   }
 }

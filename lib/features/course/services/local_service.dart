@@ -1,4 +1,5 @@
 import 'package:sekolah_kita/core/constant/enum.dart';
+import 'package:sekolah_kita/core/database/database_helper.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/database/static/data/module_data.dart';
 import 'package:sekolah_kita/core/database/static/models/module_model.dart';
@@ -36,5 +37,9 @@ class LocalService {
         getCourseProgress(CourseType.numeration);
 
     return sum / 3;
+  }
+
+  Future<int> getStarsByCourse(CourseType type) async {
+    return await DatabaseHelper.instance.getStarsByCourse(courseType: type);
   }
 }
