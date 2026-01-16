@@ -34,6 +34,12 @@ class ListeningView extends StatelessWidget {
     }
   }
 
+  void playSound(String text) {
+    TtsService()
+      ..useIndonesianMale()
+      ..speak(text);
+  }
+
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
@@ -46,6 +52,7 @@ class ListeningView extends StatelessWidget {
         }
 
         final question = state.question!;
+        playSound(question.text);
         return Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -64,11 +71,7 @@ class ListeningView extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 InkWell(
-                  onTap: () {
-                    TtsService()
-                      ..useIndonesianMale()
-                      ..speak(question.text);
-                  },
+                  onTap: () => playSound(question.text),
                   splashColor: color.tertiary,
                   borderRadius: BorderRadius.circular(24),
                   child: Ink(
