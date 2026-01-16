@@ -14,11 +14,13 @@ class CreateProfilePage extends StatefulWidget {
   State<CreateProfilePage> createState() => _CreateProfilePageState();
 }
 
-class _CreateProfilePageState extends State<CreateProfilePage> {
+class _CreateProfilePageState extends State<CreateProfilePage>
+    with WidgetsBindingObserver {
   final TextEditingController _nameController = TextEditingController();
   final PageController _pageController = PageController(viewportFraction: 0.3);
   final _currentAvatarIndex = ValueNotifier<int>(0);
   final _formKey = GlobalKey<FormState>();
+  final _keyboardVisible = ValueNotifier<bool>(false);
 
   final List<Map<String, dynamic>> _avatars = [
     {'image': 'avatar_1.png', 'name': 'T-rex'},
@@ -61,17 +63,36 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _keyboardVisible.dispose();
     _nameController.dispose();
     _pageController.dispose();
     super.dispose();
   }
 
   @override
+  void didChangeMetrics() {
+    // final bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
+    final bottomInset = View.of(context).viewInsets.bottom;
+    final isOpen = bottomInset > 0;
+
+    _keyboardVisible.value = isOpen;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+
+    print("Build");
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body: BlocListener<ProfileBloc, ProfileState>(
         listener: _listerner,
         child: Container(
@@ -95,7 +116,22 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                   ),
                 ),
                 const Spacer(),
-                ..._buildChooseAvatar(color),
+                // ..._buildChooseAvatar(color),
+                ValueListenableBuilder<bool>(
+                  valueListenable: _keyboardVisible,
+                  builder: (_, isKeyboardOpen, child) {
+                    return AnimatedOpacity(
+                      duration: const Duration(milliseconds: 200),
+                      opacity: isKeyboardOpen ? 0 : 1,
+                      child: Visibility(
+                        visible: !isKeyboardOpen,
+                        child: child!,
+                      ),
+                    );
+                  },
+                  child: Column(children: _buildChooseAvatar(color)),
+                ),
+
                 const Spacer(),
                 _buildForm(color),
               ],
@@ -114,6 +150,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
           valueListenable: _currentAvatarIndex,
           builder: (_, value, __) {
             return PageView.builder(
+              key: const PageStorageKey('avatar-page-view'),
               controller: _pageController,
               onPageChanged: (index) {
                 _currentAvatarIndex.value = index;
