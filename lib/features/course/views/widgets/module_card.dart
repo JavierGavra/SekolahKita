@@ -5,8 +5,8 @@ import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/database/static/models/module_model.dart';
 import 'package:sekolah_kita/core/theme/theme.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
-import 'package:sekolah_kita/core/widgets/custom_snackbar.dart';
 import 'package:sekolah_kita/features/course/cubit/course_detail/course_detail_cubit.dart';
+import 'package:sekolah_kita/features/lesson/views/pages/lesson_page.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/quiz_page.dart';
 
 class ModuleCard extends StatelessWidget {
@@ -42,17 +42,20 @@ class ModuleCard extends StatelessWidget {
     });
 
     // Jika tipe Materi, buka MaterialContentPage
-    if (module.type == ModuleType.material) {
-      // Navigate.push(context, MaterialContentPage(module: module));
-      showSnackBar(context, SnackBarType.commingSoon);
+    if (module.type == ModuleType.lesson) {
+      await context.pushTransition(
+        curve: Curves.easeIn,
+        type: PageTransitionType.rightToLeft,
+        child: LessonPage(moduleId: id, type: type),
+      );
     } else if (module.type == ModuleType.quiz) {
       await context.pushTransition(
         curve: Curves.easeIn,
         type: PageTransitionType.rightToLeft,
         child: QuizPage(moduleId: id, type: type),
       );
-      if (context.mounted) context.read<CourseDetailCubit>().loadData();
     }
+    if (context.mounted) context.read<CourseDetailCubit>().loadData();
   }
 
   @override
@@ -95,7 +98,7 @@ class ModuleCard extends StatelessWidget {
   }
 
   Widget _buildIcon(ColorScheme color) {
-    final isMateri = module.type == ModuleType.material;
+    final isMateri = module.type == ModuleType.lesson;
     return Container(
       width: 48,
       height: 48,
@@ -116,7 +119,7 @@ class ModuleCard extends StatelessWidget {
   }
 
   Widget _buildTypeChip(ColorScheme color) {
-    final isMateri = module.type == ModuleType.material;
+    final isMateri = module.type == ModuleType.lesson;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
