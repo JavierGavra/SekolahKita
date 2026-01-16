@@ -13,11 +13,8 @@ class ReadingLessonData {
 
   final List<LessonModel> _lessonData = [
     LessonModel(
-      /// Di isi sesuai urutan array nya saja (index + 1)
       id: 1,
       moduleId: 1,
-
-      /// Lesson ini ada pada Kategori Course apa
       course: CourseType.reading,
       lessonSections: [
         TextSection(id: 1, text: "Belajar cara melafalkan huruf"),
@@ -29,11 +26,8 @@ class ReadingLessonData {
       ],
     ),
     LessonModel(
-      /// Di isi sesuai urutan array nya saja (index + 1)
       id: 1,
       moduleId: 3,
-
-      /// Lesson ini ada pada Kategori Course apa
       course: CourseType.reading,
       lessonSections: [
         TextSection(
@@ -41,6 +35,18 @@ class ReadingLessonData {
           text: "1 = Satu\n2 = Dua\n3 = Tiga\n4 = Empat\n5 = Lima",
         ),
       ],
+    ),
+    LessonModel(
+      id: 1,
+      moduleId: 5,
+      course: CourseType.reading,
+      lessonSections: [TextSection(id: 1, text: "Hello World")],
+    ),
+    LessonModel(
+      id: 1,
+      moduleId: 7,
+      course: CourseType.reading,
+      lessonSections: [TextSection(id: 1, text: "Hello World")],
     ),
   ];
 }

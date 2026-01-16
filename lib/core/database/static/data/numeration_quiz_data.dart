@@ -1,6 +1,6 @@
 import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/core/database/static/models/question/multiple_choice_question.dart';
-import 'package:sekolah_kita/core/database/static/models/question/speech_question.dart';
+import 'package:sekolah_kita/core/database/static/models/question/multiple_sound_question.dart';
 import 'package:sekolah_kita/core/database/static/models/quiz_model.dart';
 import 'package:sekolah_kita/core/database/static/models/quiz_question_model.dart';
 
@@ -17,16 +17,66 @@ class NumerationQuizData {
       moduleId: 2,
       course: CourseType.numeration,
       questions: [
-        SpeechQuestion(id: 1, text: 'Satu', imagePath: "1"),
-        SpeechQuestion(id: 2, text: 'Dua', imagePath: "2"),
-        SpeechQuestion(id: 3, text: 'Tiga', imagePath: "3"),
-        SpeechQuestion(id: 4, text: 'Empat', imagePath: "4"),
-        SpeechQuestion(id: 5, text: 'Lima', imagePath: "5"),
-        SpeechQuestion(id: 6, text: 'Enam', imagePath: "6"),
-        SpeechQuestion(id: 7, text: 'Tujuh', imagePath: "7"),
-        SpeechQuestion(id: 8, text: 'Delapan', imagePath: "8"),
-        SpeechQuestion(id: 9, text: 'Sembilan', imagePath: "9"),
-        SpeechQuestion(id: 10, text: 'Sepuluh', imagePath: "10"),
+        MultipleSoundQuestion(
+          id: 1,
+          text: '1',
+          options: ['Satu', 'Dua'],
+          correctAnswerId: 0,
+        ),
+        MultipleSoundQuestion(
+          id: 2,
+          text: '2',
+          options: ['Satu', 'Dua'],
+          correctAnswerId: 1,
+        ),
+        MultipleSoundQuestion(
+          id: 3,
+          text: '3',
+          options: ['Tiga', 'Delapan'],
+          correctAnswerId: 0,
+        ),
+        MultipleSoundQuestion(
+          id: 4,
+          text: '4',
+          options: ['Tiga', 'Empat'],
+          correctAnswerId: 1,
+        ),
+        MultipleSoundQuestion(
+          id: 5,
+          text: '5',
+          options: ['Satu', 'Lima'],
+          correctAnswerId: 1,
+        ),
+        MultipleSoundQuestion(
+          id: 6,
+          text: '6',
+          options: ['Enam', 'Tujuh'],
+          correctAnswerId: 0,
+        ),
+        MultipleSoundQuestion(
+          id: 7,
+          text: '7',
+          options: ['Enam', 'Tujuh'],
+          correctAnswerId: 1,
+        ),
+        MultipleSoundQuestion(
+          id: 8,
+          text: '8',
+          options: ['Sembilan', 'Delapan'],
+          correctAnswerId: 1,
+        ),
+        MultipleSoundQuestion(
+          id: 9,
+          text: '9',
+          options: ['Tujuh', 'Sembilan'],
+          correctAnswerId: 1,
+        ),
+        MultipleSoundQuestion(
+          id: 10,
+          text: '10',
+          options: ['Satu', 'Sepuluh'],
+          correctAnswerId: 1,
+        ),
       ],
     ),
     QuizModel(

@@ -65,32 +65,62 @@ class ModuleData {
       ),
       ModuleModel(
         id: 2,
-        title: 'Latihan Menulis Huruf A-E',
+        title: 'Menulis Huruf A-E',
         type: ModuleType.lesson,
         course: CourseType.writing,
       ),
       ModuleModel(
         id: 3,
-        title: 'Kuis Menulis Vokal',
+        title: 'Latihan Menulis Huruf A-E',
         type: ModuleType.quiz,
         course: CourseType.writing,
       ),
       ModuleModel(
         id: 4,
-        title: 'Latihan Menulis Huruf F-J',
+        title: 'Menulis Huruf F-J',
         type: ModuleType.lesson,
         course: CourseType.writing,
       ),
       ModuleModel(
         id: 5,
-        title: 'Latihan Menulis Huruf K-O',
-        type: ModuleType.lesson,
+        title: 'Latihan Menulis Huruf F-J',
+        type: ModuleType.quiz,
         course: CourseType.writing,
       ),
       ModuleModel(
         id: 6,
-        title: 'Menulis Kata Sederhana',
+        title: 'Menulis Huruf K-O',
         type: ModuleType.lesson,
+        course: CourseType.writing,
+      ),
+      ModuleModel(
+        id: 7,
+        title: 'Latihan Menulis Huruf K-O',
+        type: ModuleType.quiz,
+        course: CourseType.writing,
+      ),
+      ModuleModel(
+        id: 8,
+        title: 'Menulis Huruf P-T',
+        type: ModuleType.lesson,
+        course: CourseType.writing,
+      ),
+      ModuleModel(
+        id: 7,
+        title: 'Latihan Menulis Huruf P-T',
+        type: ModuleType.quiz,
+        course: CourseType.writing,
+      ),
+      ModuleModel(
+        id: 8,
+        title: 'Menulis Huruf U-Z',
+        type: ModuleType.lesson,
+        course: CourseType.writing,
+      ),
+      ModuleModel(
+        id: 9,
+        title: 'Latihan Menulis Huruf U-Z',
+        type: ModuleType.quiz,
         course: CourseType.writing,
       ),
     ];
@@ -134,7 +164,6 @@ class ModuleData {
         type: ModuleType.quiz,
         course: CourseType.numeration,
       ),
-
       ModuleModel(
         id: 7,
         title: 'Pengurangan Dasar',

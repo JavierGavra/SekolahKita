@@ -104,7 +104,7 @@ class MultipleSoundView extends StatelessWidget {
                       "SUBMIT",
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
