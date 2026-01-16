@@ -25,9 +25,9 @@ class SplashscreenCubit extends Cubit<SplashscreenState> {
       await LocalDataPersisance.init();
       if (LocalDataPersisance().getIsFirstOpen ?? true) {
         LocalDataPersisance()
-          ..setLastModuleIndex(CourseType.reading, 1)
-          ..setLastModuleIndex(CourseType.writing, 2)
-          ..setLastModuleIndex(CourseType.numeration, 1);
+          ..setLastModuleIndex(CourseType.reading, 0)
+          ..setLastModuleIndex(CourseType.writing, 0)
+          ..setLastModuleIndex(CourseType.numeration, 0);
       }
 
       // Supabase Initialization

@@ -7,7 +7,7 @@ class ModuleData {
       ModuleModel(
         id: 1,
         title: 'Pengenalan Huruf Vokal',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.reading,
       ),
       ModuleModel(
@@ -19,7 +19,7 @@ class ModuleData {
       ModuleModel(
         id: 3,
         title: 'Pengenalan Huruf Konsonan',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.reading,
       ),
       ModuleModel(
@@ -31,7 +31,7 @@ class ModuleData {
       ModuleModel(
         id: 5,
         title: 'Membaca Suku Kata',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.reading,
       ),
       ModuleModel(
@@ -43,7 +43,7 @@ class ModuleData {
       ModuleModel(
         id: 7,
         title: 'Membaca Kata Sederhana',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.reading,
       ),
       ModuleModel(
@@ -60,13 +60,13 @@ class ModuleData {
       ModuleModel(
         id: 1,
         title: 'Cara Memegang Pensil',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.writing,
       ),
       ModuleModel(
         id: 2,
         title: 'Latihan Menulis Huruf A-E',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.writing,
       ),
       ModuleModel(
@@ -78,19 +78,19 @@ class ModuleData {
       ModuleModel(
         id: 4,
         title: 'Latihan Menulis Huruf F-J',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.writing,
       ),
       ModuleModel(
         id: 5,
         title: 'Latihan Menulis Huruf K-O',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.writing,
       ),
       ModuleModel(
         id: 6,
         title: 'Menulis Kata Sederhana',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.writing,
       ),
     ];
@@ -101,7 +101,7 @@ class ModuleData {
       ModuleModel(
         id: 1,
         title: 'Mengenal Angka 1–10',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.numeration,
       ),
       ModuleModel(
@@ -113,7 +113,7 @@ class ModuleData {
       ModuleModel(
         id: 3,
         title: 'Menghitung Benda',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.numeration,
       ),
       ModuleModel(
@@ -125,7 +125,7 @@ class ModuleData {
       ModuleModel(
         id: 5,
         title: 'Penjumlahan Dasar',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.numeration,
       ),
       ModuleModel(
@@ -138,7 +138,7 @@ class ModuleData {
       ModuleModel(
         id: 7,
         title: 'Pengurangan Dasar',
-        type: ModuleType.material,
+        type: ModuleType.lesson,
         course: CourseType.numeration,
       ),
       ModuleModel(
