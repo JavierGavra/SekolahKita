@@ -7,17 +7,20 @@ import 'package:sekolah_kita/core/database/static/models/question/listening_ques
 import 'package:sekolah_kita/core/database/static/models/question/multiple_choice_question.dart';
 import 'package:sekolah_kita/core/database/static/models/question/multiple_sound_question.dart';
 import 'package:sekolah_kita/core/database/static/models/question/speech_question.dart';
+import 'package:sekolah_kita/core/database/static/models/question/writing_trace_question.dart';
 import 'package:sekolah_kita/core/database/static/models/quiz_question_model.dart';
 import 'package:sekolah_kita/features/quiz/bloc/quiz_bloc.dart';
 import 'package:sekolah_kita/features/quiz/cubit/listening/listening_cubit.dart';
 import 'package:sekolah_kita/features/quiz/cubit/multiple_choice/multiple_choice_cubit.dart';
 import 'package:sekolah_kita/features/quiz/cubit/multiple_sound/multiple_sound_cubit.dart';
 import 'package:sekolah_kita/features/quiz/cubit/speech/speech_cubit.dart';
+import 'package:sekolah_kita/features/quiz/cubit/writing_trace/writing_trace_cubit.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/listening_view.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/multiple_choice_view.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/multiple_sound_view.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/quiz_result_page.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/speech_view.dart';
+import 'package:sekolah_kita/features/quiz/views/pages/writing_trace_view.dart';
 import 'package:sekolah_kita/features/quiz/views/widgets/exit_dialog.dart';
 
 class QuizPage extends StatefulWidget {
@@ -210,6 +213,12 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
         key: ValueKey(question.id),
         create: (context) => MultipleSoundCubit()..startQuiz(question),
         child: MultipleSoundView(),
+      );
+    } else if (question is WritingTraceQuestion) {
+      return BlocProvider(
+        key: ValueKey(question.id),
+        create: (_) => WritingTraceCubit()..startQuiz(question),
+        child: const WritingTraceView(),
       );
     }
 

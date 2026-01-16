@@ -72,7 +72,7 @@ class WritingQuizData {
       course: CourseType.writing,
       questions: [
         // Soal 1: Trace huruf A
-        // WritingTraceQuestion(id: 1, target: 'A'),
+        WritingTraceQuestion(id: 1, target: 'A'),
 
         // Soal 2: Identifikasi huruf E
         MultipleChoiceQuestion(
@@ -84,7 +84,7 @@ class WritingQuizData {
         ),
 
         // Soal 3: Trace huruf I
-        // WritingTraceQuestion(id: 3, target: 'I'),
+        WritingTraceQuestion(id: 3, target: 'I'),
 
         // Soal 4: Identifikasi huruf O
         MultipleChoiceQuestion(
