@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sekolah_kita/core/bloc/provider.dart';
 import 'package:sekolah_kita/core/theme/theme.dart';
 import 'package:sekolah_kita/features/splashscreen/views/pages/splashscreen.dart';
-import 'package:sekolah_kita/test.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,11 +25,6 @@ class MyApp extends StatelessWidget {
           colorScheme: MaterialTheme.lightScheme(),
         ),
         home: const Splashscreen(),
-        // home: Scaffold(
-        //   body: WritingTraceView(
-        //     question: WritingTraceQuestion(id: 1, target: 'A'),
-        //   ),
-        // ),
       ),
     );
   }
