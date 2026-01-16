@@ -40,7 +40,7 @@ class CoursePage extends StatelessWidget {
                       progress: LocalService().getCourseProgress(
                         CourseType.reading,
                       ),
-                      myStars: 3,
+                      // myStars: state.readingStar,
                     ),
                     const SizedBox(height: 16),
                     CourseCard(
@@ -48,7 +48,7 @@ class CoursePage extends StatelessWidget {
                       progress: LocalService().getCourseProgress(
                         CourseType.writing,
                       ),
-                      myStars: 2,
+                      // myStars: state.writingStar,
                     ),
                     const SizedBox(height: 16),
                     CourseCard(
@@ -56,7 +56,7 @@ class CoursePage extends StatelessWidget {
                       progress: LocalService().getCourseProgress(
                         CourseType.numeration,
                       ),
-                      myStars: 4,
+                      // myStars: state.numerationsStar,
                     ),
                   ],
                 ),

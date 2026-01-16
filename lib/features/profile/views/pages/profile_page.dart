@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sekolah_kita/core/widgets/loading_widget.dart';
 import 'package:sekolah_kita/features/auth/views/widgets/logout_dialog.dart';
 import 'package:sekolah_kita/features/profile/bloc/profile_bloc.dart';
+import 'package:sekolah_kita/features/profile/services/local_service.dart';
 import 'package:sekolah_kita/features/profile/views/widgets/achievement_card.dart';
 import 'package:sekolah_kita/features/profile/views/widgets/menu_tile.dart';
 import 'package:sekolah_kita/features/profile/views/widgets/stat_card.dart';
@@ -68,10 +69,10 @@ class ProfilePage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
-                              profile.kelas,
-                              style: const TextStyle(color: Colors.white70),
-                            ),
+                            // Text(
+                            //   profile.kelas,
+                            //   style: const TextStyle(color: Colors.white70),
+                            // ),
                           ],
                         ),
                       ),
@@ -86,22 +87,28 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          StatCard(
-                            icon: Icons.star,
-                            label: 'Total Bintang',
-                            value: profile.bintang.toString(),
+                          FutureBuilder(
+                            future: LocalService().getStars(),
+                            builder: (context, asyncSnapshot) {
+                              return StatCard(
+                                icon: Icons.star,
+                                label: 'Total Bintang',
+                                value: "${asyncSnapshot.data ?? 0}",
+                              );
+                            },
                           ),
                           const SizedBox(width: 8),
                           StatCard(
                             icon: Icons.timer,
                             label: 'Waktu Belajar',
-                            value: '${profile.jamBelajar} Jam',
+                            // value: '${profile.jamBelajar} Jam',
+                            value: '6 Menit',
                           ),
                           const SizedBox(width: 8),
                           StatCard(
                             icon: Icons.book,
                             label: 'Modul Selesai',
-                            value: profile.modul.toString(),
+                            value: "${LocalService().getTotalModule()}",
                           ),
                         ],
                       ),
@@ -124,14 +131,14 @@ class ProfilePage extends StatelessWidget {
                         title: 'Pengaturan',
                         onTap: () {},
                       ),
-                      MenuTile(
-                        icon: Icons.logout,
-                        title: 'Keluar',
-                        onTap: () => showDialog(
-                          context: context,
-                          builder: (context) => const LogoutDialog(),
-                        ),
-                      ),
+                      // MenuTile(
+                      //   icon: Icons.logout,
+                      //   title: 'Keluar',
+                      //   onTap: () => showDialog(
+                      //     context: context,
+                      //     builder: (context) => const LogoutDialog(),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

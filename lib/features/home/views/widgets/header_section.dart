@@ -72,7 +72,17 @@ class HeaderSection extends StatelessWidget {
           "Modul",
           "${LocalService().getTotalModule()}",
         ),
-        _buildQuickInfoItem(color, Icons.stars_rounded, "Bintang", "9/15"),
+        FutureBuilder(
+          future: LocalService().getStars(),
+          builder: (context, asyncSnapshot) {
+            return _buildQuickInfoItem(
+              color,
+              Icons.stars_rounded,
+              "Bintang",
+              "${asyncSnapshot.data ?? 0}",
+            );
+          },
+        ),
       ],
     );
   }
