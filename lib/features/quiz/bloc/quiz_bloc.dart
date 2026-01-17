@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
+import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/database/static/models/quiz_question_model.dart';
 import '../services/local_service.dart';
 
@@ -13,6 +14,8 @@ part 'quiz_state.dart';
 
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
   final _localService = LocalService();
+  late final int moduleId;
+  late final CourseType type;
 
   QuizBloc() : super(QuizState.initial()) {
     on<QuizStarted>(_onQuizStarted);
@@ -26,6 +29,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     try {
       // EXAMPLE QUIZ
       // final questions = ExampleQuizData().getQuestion();
+      moduleId = event.id;
+      type = event.type;
 
       final questions = _localService.getQuestions(event.type, event.id);
 
@@ -45,6 +50,14 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         : state.correctAnswers;
 
     if (state.isLastQuestion) {
+      final localData = LocalDataPersisance();
+      if (moduleId > localData.getLastModuleIndex(type)!) {
+        await localData.setLastModuleIndex(type, moduleId);
+      }
+
+      if (state.percentage >= 80) {
+        await LocalService().updateStar(type, moduleId);
+      }
       emit(
         state.copyWith(
           status: QuizStateStatus.completed,

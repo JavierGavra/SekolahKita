@@ -44,7 +44,6 @@ class _LessonPageState extends State<LessonPage> with TickerProviderStateMixin {
 
   void _whenCompleted(LessonState state) {
     if (state.status == LessonStateStatus.completed) {
-      print("KAMU SIGGMAAA");
       final localData = LocalDataPersisance();
       if (widget.moduleId > localData.getLastModuleIndex(widget.type)!) {
         localData.setLastModuleIndex(widget.type, widget.moduleId);

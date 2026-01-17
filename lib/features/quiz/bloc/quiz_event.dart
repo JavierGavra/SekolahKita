@@ -26,4 +26,12 @@ final class NextQuestionRequested extends QuizEvent {
   List<Object?> get props => [wasCorrect];
 }
 
-final class QuizCompleted extends QuizEvent {}
+final class QuizCompleted extends QuizEvent {
+  final int moduleId;
+  final CourseType type;
+
+  const QuizCompleted({required this.moduleId, required this.type});
+
+  @override
+  List<Object?> get props => [moduleId, type];
+}

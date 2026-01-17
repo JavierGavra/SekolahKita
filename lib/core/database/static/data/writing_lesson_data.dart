@@ -49,5 +49,58 @@ class WritingLessonData {
         DrawLetterSection(id: 6, text: "E", char: 'E'),
       ],
     ),
+    LessonModel(
+      id: 2,
+      moduleId: 4,
+      course: CourseType.writing,
+      lessonSections: [
+        TextSection(id: 1, text: "Belajar cara menulis huruf\nF - J"),
+        DrawLetterSection(id: 2, text: "F", char: 'F'),
+        DrawLetterSection(id: 3, text: "G", char: "G"),
+        DrawLetterSection(id: 4, text: "H", char: 'H'),
+        DrawLetterSection(id: 5, text: "I", char: 'I'),
+        DrawLetterSection(id: 6, text: "K", char: 'K'),
+      ],
+    ),
+    LessonModel(
+      id: 2,
+      moduleId: 6,
+      course: CourseType.writing,
+      lessonSections: [
+        TextSection(id: 1, text: "Belajar cara menulis huruf\nK - O"),
+        DrawLetterSection(id: 2, text: "K", char: 'K'),
+        DrawLetterSection(id: 3, text: "L", char: "L"),
+        DrawLetterSection(id: 4, text: "M", char: 'M'),
+        DrawLetterSection(id: 5, text: "N", char: 'N'),
+        DrawLetterSection(id: 6, text: "O", char: 'O'),
+      ],
+    ),
+    LessonModel(
+      id: 2,
+      moduleId: 8,
+      course: CourseType.writing,
+      lessonSections: [
+        TextSection(id: 1, text: "Belajar cara menulis huruf\nP - T"),
+        DrawLetterSection(id: 2, text: "P", char: 'P'),
+        DrawLetterSection(id: 3, text: "Q", char: "Q"),
+        DrawLetterSection(id: 4, text: "R", char: 'R'),
+        DrawLetterSection(id: 5, text: "S", char: 'S'),
+        DrawLetterSection(id: 6, text: "T", char: 'T'),
+      ],
+    ),
+    LessonModel(
+      id: 2,
+      moduleId: 10,
+      course: CourseType.writing,
+      lessonSections: [
+        TextSection(id: 1, text: "Belajar cara menulis huruf\nU - Z"),
+        DrawLetterSection(id: 2, text: "U", char: 'U'),
+        DrawLetterSection(id: 3, text: "V", char: "V"),
+        DrawLetterSection(id: 4, text: "W", char: 'W'),
+        DrawLetterSection(id: 5, text: "X", char: 'X'),
+        DrawLetterSection(id: 6, text: "Y", char: 'Y'),
+        DrawLetterSection(id: 7, text: "Z", char: 'Z'),
+      ],
+    ),
   ];
 }

@@ -34,4 +34,8 @@ class LocalService {
   Future<int> getStars() async {
     return await DatabaseHelper.instance.getStars();
   }
+
+  Future<int> getStarsByCourse(CourseType type) async {
+    return await DatabaseHelper.instance.getStarsByCourse(courseType: type);
+  }
 }
