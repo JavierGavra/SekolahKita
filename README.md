@@ -8,29 +8,23 @@ Aplikasi ini menggunakan pendekatan **lesson + quiz**, animasi menulis (writing 
 ## ✨ Fitur Utama
 
 * 📖 **Materi Pembelajaran** (Lesson)
-
   * Literasi Membaca (huruf, suku kata, kata)
   * Literasi Menulis (latihan menulis huruf dengan tracing)
   * Numerasi Dasar (angka dan operasi dasar)
 * 📝 **Kuis Interaktif**
-
   * Multiple choice
   * Multiple sound
   * Listening
   * Speech
   * Writing trace (menulis mengikuti pola)
 * ⭐ **Sistem Bintang**
-
   * Mendapatkan bintang setelah menyelesaikan kuis dengan nilai >80
 * 📊 **Progress Belajar**
-
   * Progress per course
   * Modul terkunci & terbuka bertahap
 * ⏱️ **Waktu Belajar**
-
   * Akumulasi total waktu belajar pengguna
 * 👶 **Profil Anak**
-
   * Avatar
   * Username
 
@@ -103,9 +97,7 @@ cd SekolahKita
 flutter pub get
 ```
 
----
-
-## ▶️ Menjalankan Aplikasi
+### Menjalankan Aplikasi
 
 ```bash
 flutter run
