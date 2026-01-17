@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sekolah_kita/core/widgets/custom_snackbar.dart';
 import 'package:sekolah_kita/core/widgets/loading_widget.dart';
 import 'package:sekolah_kita/features/profile/bloc/profile_bloc.dart';
 import 'package:sekolah_kita/features/profile/views/widgets/achievement_card.dart';
@@ -121,7 +122,9 @@ class ProfilePage extends StatelessWidget {
                       MenuTile(
                         icon: Icons.settings,
                         title: 'Pengaturan',
-                        onTap: () {},
+                        onTap: () {
+                          showSnackBar(context, SnackBarType.commingSoon);
+                        },
                       ),
                       // MenuTile(
                       //   icon: Icons.logout,

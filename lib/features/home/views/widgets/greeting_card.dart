@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sekolah_kita/features/home/services/local_service.dart';
 
 class GreetingCard extends StatelessWidget {
   const GreetingCard({super.key});
@@ -6,6 +7,9 @@ class GreetingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+
+    final totalModule = LocalService().getTotalModule();
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 40),
       decoration: BoxDecoration(
@@ -23,13 +27,13 @@ class GreetingCard extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "🎯",
+            (totalModule == 0) ? "🚀" : "🎯",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 48, height: 1),
           ),
           const SizedBox(height: 12),
           Text(
-            'Terus Semangat!',
+            (totalModule == 0) ? "Mulai Belajar" : 'Terus Semangat!',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16,
@@ -39,7 +43,9 @@ class GreetingCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Kamu sudah menyelesaikan 12 modul bulan ini. Pertahankan konsistensimu!',
+            (totalModule == 0)
+                ? "Buktikan bahwa kamu anak yang cerdas!"
+                : 'Kamu sudah menyelesaikan $totalModule modul. Pertahankan performamu!',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: color.onSurfaceVariant,

@@ -30,23 +30,23 @@ class HomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Lanjutkan Belajar',
-                  style: TextStyle(
-                    fontSize: 20,
-                    height: 1.4,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
                 if (lastCourse != null) ...[
+                  Text(
+                    'Lanjutkan Belajar',
+                    style: TextStyle(
+                      fontSize: 20,
+                      height: 1.4,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   SizedBox(height: 16),
                   ContinueCourseCard(
                     type: lastCourse,
                     progress: LocalService().getCourseProgress(lastCourse),
                     myStars: 3,
                   ),
+                  SizedBox(height: 16),
                 ],
-                SizedBox(height: 16),
                 GreetingCard(),
               ],
             ),
