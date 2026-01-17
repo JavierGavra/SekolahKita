@@ -1,3 +1,4 @@
+import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -21,14 +22,83 @@ class DatabaseHelper {
   }
 
   Future _createDB(Database db, int version) async {
-    // EXAMPLE
-    // await db.execute('''
-    //   CREATE TABLE tags (
-    //     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    //     title VARCHAR(30) NOT NULL,
-    //     background_hex TEXT NOT NULL,
-    //     background_dark_status BOOLEAN NOT NULL
-    //   )
-    // ''');
+    await db.execute('''
+      CREATE TABLE quiz_stars (
+        module_id INTEGER NOT NULL,
+        course_type VARCHAR(30) NOT NULL
+      )
+    ''');
+  }
+
+  String courseTypeToString(CourseType type) {
+    switch (type) {
+      case CourseType.reading:
+        return 'reading';
+      case CourseType.writing:
+        return 'writing';
+      case CourseType.numeration:
+        return 'numeration';
+    }
+  }
+
+  Future<void> addQuizStarsIfNotExists({
+    required CourseType courseType,
+    required int moduleId,
+  }) async {
+    final course = courseTypeToString(courseType);
+
+    // 1️⃣ cek apakah data sudah ada
+    final result = await _database!.query(
+      'quiz_stars',
+      where: 'module_id = ? AND course_type = ?',
+      whereArgs: [moduleId, course],
+      limit: 1,
+    );
+
+    // 2️⃣ jika sudah ada → tidak lakukan apa-apa
+    if (result.isNotEmpty) return;
+
+    // 3️⃣ insert jika belum ada
+    await _database!.insert('quiz_stars', {
+      'module_id': moduleId,
+      'course_type': course,
+    }, conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  Future<int> getStars() async {
+    final result = await _database!.rawQuery('''
+    SELECT COUNT(quiz_stars.module_id) as totalStars
+    FROM quiz_stars
+    ''');
+
+    return (result.first['totalStars'] as int?) ?? 0;
+  }
+
+  Future<int> getStarsByCourse({required CourseType courseType}) async {
+    final course = courseTypeToString(courseType);
+
+    final result = await _database!.rawQuery(
+      '''
+    SELECT COUNT(quiz_stars.module_id) as totalStars
+    FROM quiz_stars
+    WHERE course_type = ?
+    ''',
+      [course],
+    );
+
+    return (result.first['totalStars'] as int?) ?? 0;
+  }
+
+  Future<Set<int>> getStarredModuleIds({required CourseType courseType}) async {
+    final course = courseTypeToString(courseType);
+
+    final result = await _database!.query(
+      'quiz_stars',
+      columns: ['module_id'],
+      where: 'course_type = ?',
+      whereArgs: [course],
+    );
+
+    return result.map((e) => e['module_id'] as int).toSet();
   }
 }
