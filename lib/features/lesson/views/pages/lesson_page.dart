@@ -8,6 +8,7 @@ import 'package:sekolah_kita/core/database/static/models/lesson_section/audio_se
 import 'package:sekolah_kita/core/database/static/models/lesson_section/multiple_choice_section.dart';
 import 'package:sekolah_kita/core/database/static/models/lesson_section/text_section.dart';
 import 'package:sekolah_kita/core/database/static/models/lesson_section_model.dart';
+import 'package:sekolah_kita/core/utils/study_time/study_time_session.dart';
 import 'package:sekolah_kita/features/lesson/bloc/lesson_bloc.dart';
 import 'package:sekolah_kita/features/lesson/cubit/multiple_choice/multiple_choice_cubit.dart';
 import 'package:sekolah_kita/features/lesson/views/pages/draw_letter_section_view.dart';
@@ -80,6 +81,7 @@ class _LessonPageState extends State<LessonPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     _progressController.dispose();
+    StudyTimeSession.cancel();
     super.dispose();
   }
 

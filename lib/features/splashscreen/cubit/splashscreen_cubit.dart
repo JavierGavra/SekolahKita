@@ -4,8 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/core/database/database_helper.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
-// import 'package:supabase_flutter/supabase_flutter.dart';
-// import 'package:sekolah_kita/core/constant/constant.dart';
 
 part 'splashscreen_state.dart';
 
@@ -29,9 +27,6 @@ class SplashscreenCubit extends Cubit<SplashscreenState> {
           ..setLastModuleIndex(CourseType.writing, 0)
           ..setLastModuleIndex(CourseType.numeration, 0);
       }
-
-      // Supabase Initialization
-      // await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
 
       emit(SplashscreenState(status: SplashscreenStatus.success));
     } catch (e) {

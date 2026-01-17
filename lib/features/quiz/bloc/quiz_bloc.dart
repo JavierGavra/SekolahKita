@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/database/static/models/quiz_question_model.dart';
+import 'package:sekolah_kita/core/utils/study_time/study_time_session.dart';
 import '../services/local_service.dart';
 
 // import 'package:sekolah_kita/core/database/static/data/example_quiz_data.dart';
@@ -34,6 +35,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
 
       final questions = _localService.getQuestions(event.type, event.id);
 
+      StudyTimeSession.start();
       emit(state.copyWith(status: QuizStateStatus.ready, questions: questions));
     } catch (e) {
       if (kDebugMode) print(e);
@@ -51,6 +53,10 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
 
     if (state.isLastQuestion) {
       final localData = LocalDataPersisance();
+
+      final seconds = StudyTimeSession.finish();
+      await localData.addSeconds(seconds);
+
       if (moduleId > localData.getLastModuleIndex(type)!) {
         await localData.setLastModuleIndex(type, moduleId);
       }

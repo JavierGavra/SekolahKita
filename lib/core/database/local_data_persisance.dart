@@ -32,6 +32,8 @@ class LocalDataPersisance {
     });
   }
 
+  int? get getTotalSeconds => _prefs?.getInt("total_study_seconds");
+
   Future<void> setIsFirstOpen(bool value) async {
     await _prefs?.setBool('is_first_open', value);
   }
@@ -54,6 +56,11 @@ class LocalDataPersisance {
       CourseType.writing => "writing_last_module_index",
       CourseType.numeration => "numeration_last_module_index",
     }, value);
+  }
+
+  Future<void> addSeconds(int seconds) async {
+    final current = getTotalSeconds ?? 0;
+    await _prefs?.setInt('total_study_seconds', current + seconds);
   }
 
   Future<void> removeUsername() async {
