@@ -106,19 +106,19 @@ class ModuleData {
         course: CourseType.writing,
       ),
       ModuleModel(
-        id: 7,
+        id: 9,
         title: 'Latihan Menulis Huruf P-T',
         type: ModuleType.quiz,
         course: CourseType.writing,
       ),
       ModuleModel(
-        id: 8,
+        id: 10,
         title: 'Menulis Huruf U-Z',
         type: ModuleType.lesson,
         course: CourseType.writing,
       ),
       ModuleModel(
-        id: 9,
+        id: 11,
         title: 'Latihan Menulis Huruf U-Z',
         type: ModuleType.quiz,
         course: CourseType.writing,
