@@ -1,11 +1,13 @@
-# 📚 Sekolah Kita
+<h1>📚 Sekolah Kita</h1>
 
-![Flutter](https://img.shields.io/badge/Flutter-Stable-02569B?style=for-the-badge&logo=flutter&logoColor=white)
-![Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
-![BLoC](https://img.shields.io/badge/State%20Management-BLoC-5C2D91?style=for-the-badge&logo=flutter&logoColor=white)
-![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-![Material Design](https://img.shields.io/badge/UI-Material%20Design-757575?style=for-the-badge&logo=materialdesign&logoColor=white)
-![Clean Architecture](https://img.shields.io/badge/Architecture-Clean-4CAF50?style=for-the-badge)
+![Flutter](https://img.shields.io/badge/Flutter-3.9.2-02569B?logo=flutter)
+![Dart](https://img.shields.io/badge/Dart-3.9.2-0175C2?logo=dart)
+![License](https://img.shields.io/badge/License-Private-red)
+![Android](https://img.shields.io/badge/Platform-Android-3DDC84?logo=android&logoColor=white)
+![BLoC](https://img.shields.io/badge/State%20Management-BLoC-5C2D91?logo=flutter&logoColor=white)
+![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?&logo=sqlite&logoColor=white)
+![Material Design](https://img.shields.io/badge/UI-Material%20Design-757575?logo=materialdesign&logoColor=white)
+![Clean Architecture](https://img.shields.io/badge/Architecture-Clean-4CAF50)
 
 **Sekolah Kita** adalah aplikasi edukasi berbasis Android yang dirancang untuk membantu anak-anak belajar **membaca, menulis, dan berhitung** secara interaktif dan menyenangkan.
 Aplikasi ini menggunakan pendekatan **lesson + quiz**, animasi menulis (writing trace), audio, serta sistem progres dan bintang untuk meningkatkan motivasi belajar.
