@@ -8,6 +8,7 @@ import 'package:sekolah_kita/core/database/static/models/question/multiple_sound
 import 'package:sekolah_kita/core/database/static/models/question/speech_question.dart';
 import 'package:sekolah_kita/core/database/static/models/question/writing_trace_question.dart';
 import 'package:sekolah_kita/core/database/static/models/quiz_question_model.dart';
+import 'package:sekolah_kita/core/utils/study_time/study_time_session.dart';
 import 'package:sekolah_kita/features/quiz/bloc/quiz_bloc.dart';
 import 'package:sekolah_kita/features/quiz/cubit/listening/listening_cubit.dart';
 import 'package:sekolah_kita/features/quiz/cubit/multiple_choice/multiple_choice_cubit.dart';
@@ -83,6 +84,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    StudyTimeSession.cancel();
     _progressController.dispose();
     super.dispose();
   }

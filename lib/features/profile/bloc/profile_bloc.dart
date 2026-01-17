@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/features/profile/models/profile_model.dart';
+import 'package:sekolah_kita/features/profile/services/local_service.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -44,9 +45,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         username: localData.getUsername ?? '----',
         avatar: localData.getAvatar ?? '',
         kelas: 'Kelas 4 SD',
-        bintang: 10,
-        jamBelajar: 30,
-        modul: 15,
+        bintang: await LocalService().getStars(),
+        waktuBelajar: _parseSecond(localData.getTotalSeconds ?? 0),
+        modul: LocalService().getTotalModule(),
       );
 
       emit(ProfileState(status: ProfileStateStatus.success, profile: profile));
@@ -54,5 +55,19 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (kDebugMode) print(e);
       emit(ProfileState(status: ProfileStateStatus.failure));
     }
+  }
+
+  String _parseSecond(int seconds) {
+    if (seconds <= 60) {
+      return '$seconds detik';
+    }
+
+    if (seconds <= 3600) {
+      final minutes = (seconds / 60).floor();
+      return '$minutes menit';
+    }
+
+    final hours = (seconds / 3600).floor();
+    return '$hours jam';
   }
 }

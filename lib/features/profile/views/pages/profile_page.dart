@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sekolah_kita/core/widgets/loading_widget.dart';
-import 'package:sekolah_kita/features/auth/views/widgets/logout_dialog.dart';
 import 'package:sekolah_kita/features/profile/bloc/profile_bloc.dart';
-import 'package:sekolah_kita/features/profile/services/local_service.dart';
 import 'package:sekolah_kita/features/profile/views/widgets/achievement_card.dart';
 import 'package:sekolah_kita/features/profile/views/widgets/menu_tile.dart';
 import 'package:sekolah_kita/features/profile/views/widgets/stat_card.dart';
@@ -87,28 +85,22 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          FutureBuilder(
-                            future: LocalService().getStars(),
-                            builder: (context, asyncSnapshot) {
-                              return StatCard(
-                                icon: Icons.star,
-                                label: 'Total Bintang',
-                                value: "${asyncSnapshot.data ?? 0}",
-                              );
-                            },
+                          StatCard(
+                            icon: Icons.star,
+                            label: 'Total Bintang',
+                            value: '${profile.bintang}',
                           ),
                           const SizedBox(width: 8),
                           StatCard(
                             icon: Icons.timer,
                             label: 'Waktu Belajar',
-                            // value: '${profile.jamBelajar} Jam',
-                            value: '6 Menit',
+                            value: profile.waktuBelajar,
                           ),
                           const SizedBox(width: 8),
                           StatCard(
                             icon: Icons.book,
                             label: 'Modul Selesai',
-                            value: "${LocalService().getTotalModule()}",
+                            value: "${profile.modul}",
                           ),
                         ],
                       ),

@@ -2,7 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
+import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/database/static/models/lesson_section_model.dart';
+import 'package:sekolah_kita/core/utils/study_time/study_time_session.dart';
 import 'package:sekolah_kita/features/lesson/services/local_service.dart';
 
 // import 'package:sekolah_kita/core/database/static/data/example_lesson_data.dart';
@@ -28,6 +30,7 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
 
       final sections = _localService.getSections(event.type, event.id);
 
+      StudyTimeSession.start();
       emit(
         state.copyWith(
           status: LessonStateStatus.ready,
@@ -47,6 +50,11 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
     Emitter<LessonState> emit,
   ) async {
     if (state.isLastSection) {
+      final localData = LocalDataPersisance();
+
+      final seconds = StudyTimeSession.finish();
+      await localData.addSeconds(seconds);
+
       emit(state.copyWith(status: LessonStateStatus.completed));
     } else {
       emit(
