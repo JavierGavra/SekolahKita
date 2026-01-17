@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
-import 'package:sekolah_kita/features/profile/models/profile_model.dart';
+import 'package:sekolah_kita/core/database/static/models/profile_model.dart';
 import 'package:sekolah_kita/features/profile/services/local_service.dart';
 
 part 'profile_event.dart';
