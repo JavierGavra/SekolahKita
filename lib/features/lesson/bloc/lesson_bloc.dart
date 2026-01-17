@@ -47,7 +47,6 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
     Emitter<LessonState> emit,
   ) async {
     if (state.isLastSection) {
-      print("object");
       emit(state.copyWith(status: LessonStateStatus.completed));
     } else {
       emit(

@@ -14,6 +14,7 @@ class ModuleCard extends StatelessWidget {
   final CourseType type;
   final bool isLocked;
   final bool isCompleted;
+  final bool isStar;
 
   const ModuleCard({
     super.key,
@@ -21,6 +22,7 @@ class ModuleCard extends StatelessWidget {
     required this.type,
     required this.isLocked,
     required this.isCompleted,
+    this.isStar = false,
   });
 
   void _onTap(BuildContext context, int id) async {
@@ -88,6 +90,7 @@ class ModuleCard extends StatelessWidget {
                 _buildIcon(color),
                 const SizedBox(width: 16),
                 Expanded(child: _buildContent(color)),
+                const SizedBox(width: 8),
                 if (isCompleted) _buildCompletedIndicator(color),
               ],
             ),
@@ -182,9 +185,12 @@ class ModuleCard extends StatelessWidget {
     return Container(
       width: 28,
       height: 28,
-      decoration: BoxDecoration(color: color.success, shape: BoxShape.circle),
+      decoration: BoxDecoration(
+        color: isStar ? const Color(0xFFF57C00) : color.success,
+        shape: BoxShape.circle,
+      ),
       child: Icon(
-        Icons.check_circle_outline_rounded,
+        isStar ? Icons.star_rounded : Icons.check_circle_outline_rounded,
         color: color.onSuccess,
         size: 16,
       ),

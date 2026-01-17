@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
+import 'package:sekolah_kita/core/database/database_helper.dart';
 import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/database/static/models/module_model.dart';
 import 'package:sekolah_kita/features/course/services/local_service.dart';
@@ -18,7 +19,7 @@ class CourseDetailCubit extends Cubit<CourseDetailState> {
     loadData();
   }
 
-  void loadData() {
+  void loadData() async {
     emit(state.copyWith(status: CourseDetailStateStatus.loading));
 
     final lastModuleIndex = LocalDataPersisance().getLastModuleIndex(type)!;
@@ -29,6 +30,17 @@ class CourseDetailCubit extends Cubit<CourseDetailState> {
       CourseType.numeration => _localService.getNumerationModules(),
     };
 
+    final starredIds = await DatabaseHelper.instance.getStarredModuleIds(
+      courseType: type,
+    );
+
+    final modulesWithStar = modules.map((module) {
+      return module.copyWith(isStar: starredIds.contains(module.id));
+    }).toList();
+
+    print(starredIds);
+    print(modulesWithStar.map((e) => e.isStar).toList());
+
     final progress = _localService.getCourseProgress(type);
 
     emit(
@@ -36,7 +48,7 @@ class CourseDetailCubit extends Cubit<CourseDetailState> {
         status: CourseDetailStateStatus.success,
         lastModuleIndex: lastModuleIndex,
         moduleAmount: modules.length,
-        modules: modules,
+        modules: modulesWithStar,
         progress: progress,
       ),
     );

@@ -4,6 +4,7 @@ import 'package:sekolah_kita/core/constant/enum.dart';
 import 'package:sekolah_kita/core/constant/svg_assets.dart';
 import 'package:sekolah_kita/core/utils/navigate/navigate.dart';
 import 'package:sekolah_kita/features/course/views/pages/course_detail_page.dart';
+import 'package:sekolah_kita/features/home/services/local_service.dart';
 
 class ContinueCourseCard extends StatelessWidget {
   final CourseType type;
@@ -144,41 +145,47 @@ class ContinueCourseCard extends StatelessWidget {
   }
 
   Widget _buildStars(ColorScheme color) {
-    return Row(
-      children: [
-        ...List.generate(5, (index) {
-          if (index < myStars) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: Icon(
-                Icons.star_rounded,
-                size: 16,
-                color: const Color(0xFFF57C00),
-              ),
-            );
-          } else {
-            return Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: Icon(
-                Icons.star_border_rounded,
-                size: 16,
-                color: color.secondaryContainer,
-              ),
-            );
-          }
-        }),
-        Padding(
-          padding: EdgeInsets.only(right: 2),
-          child: Text(
-            "$myStars/5",
-            style: TextStyle(
-              color: color.onSurfaceVariant,
-              fontSize: 12,
-              height: 1.333,
-            ),
-          ),
-        ),
-      ],
+    return FutureBuilder(
+      future: LocalService().getStarsByCourse(type),
+      builder: (context, asyncSnapshot) {
+        int star = asyncSnapshot.data ?? 0;
+        return Row(
+          children: [
+            ...List.generate(star, (index) {
+              if (index < star) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                  child: Icon(
+                    Icons.star_rounded,
+                    size: 16,
+                    color: const Color(0xFFF57C00),
+                  ),
+                );
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                  child: Icon(
+                    Icons.star_border_rounded,
+                    size: 16,
+                    color: color.secondaryContainer,
+                  ),
+                );
+              }
+            }),
+            // Padding(
+            //   padding: EdgeInsets.only(right: 2),
+            //   child: Text(
+            //     "$myStars/5",
+            //     style: TextStyle(
+            //       color: color.onSurfaceVariant,
+            //       fontSize: 12,
+            //       height: 1.333,
+            //     ),
+            //   ),
+            // ),
+          ],
+        );
+      },
     );
   }
 }

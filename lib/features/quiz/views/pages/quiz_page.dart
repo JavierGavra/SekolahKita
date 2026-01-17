@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sekolah_kita/core/constant/enum.dart';
-import 'package:sekolah_kita/core/database/local_data_persisance.dart';
 import 'package:sekolah_kita/core/database/static/models/question/listening_question.dart';
 import 'package:sekolah_kita/core/database/static/models/question/multiple_choice_question.dart';
 import 'package:sekolah_kita/core/database/static/models/question/multiple_sound_question.dart';
@@ -15,7 +14,6 @@ import 'package:sekolah_kita/features/quiz/cubit/multiple_choice/multiple_choice
 import 'package:sekolah_kita/features/quiz/cubit/multiple_sound/multiple_sound_cubit.dart';
 import 'package:sekolah_kita/features/quiz/cubit/speech/speech_cubit.dart';
 import 'package:sekolah_kita/features/quiz/cubit/writing_trace/writing_trace_cubit.dart';
-import 'package:sekolah_kita/features/quiz/services/local_service.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/listening_view.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/multiple_choice_view.dart';
 import 'package:sekolah_kita/features/quiz/views/pages/multiple_sound_view.dart';
@@ -50,16 +48,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   }
 
   void _whenCompleted(QuizState state) {
-    if (state.isLastQuestion && state.status == QuizStateStatus.completed) {
-      final localData = LocalDataPersisance();
-      if (widget.moduleId > localData.getLastModuleIndex(widget.type)!) {
-        localData.setLastModuleIndex(widget.type, widget.moduleId);
-      }
-
-      if (state.percentage > 90) {
-        LocalService().updateStar(widget.type, widget.moduleId);
-      }
-
+    if (state.status == QuizStateStatus.completed) {
       context.pushReplacementTransition(
         curve: Curves.easeInOut,
         type: PageTransitionType.sharedAxisVertical,

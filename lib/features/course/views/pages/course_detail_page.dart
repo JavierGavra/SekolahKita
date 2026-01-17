@@ -61,10 +61,12 @@ class CourseDetailPage extends StatelessWidget {
                           (module) => Padding(
                             padding: const EdgeInsets.only(bottom: 12),
                             child: ModuleCard(
+                              key: ValueKey("${module.id}|${module.isStar}"),
                               module: module,
                               type: type,
                               isLocked: module.id > state.lastModuleIndex + 1,
                               isCompleted: module.id <= state.lastModuleIndex,
+                              isStar: module.isStar,
                             ),
                           ),
                         ),

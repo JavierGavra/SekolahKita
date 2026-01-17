@@ -86,8 +86,19 @@ class DatabaseHelper {
       [course],
     );
 
-    print(result);
-
     return (result.first['totalStars'] as int?) ?? 0;
+  }
+
+  Future<Set<int>> getStarredModuleIds({required CourseType courseType}) async {
+    final course = courseTypeToString(courseType);
+
+    final result = await _database!.query(
+      'quiz_stars',
+      columns: ['module_id'],
+      where: 'course_type = ?',
+      whereArgs: [course],
+    );
+
+    return result.map((e) => e['module_id'] as int).toSet();
   }
 }
